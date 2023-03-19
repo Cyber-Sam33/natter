@@ -8,11 +8,10 @@ const http = require('http');
 const cors = require('cors');
 
 
-app.use(cors());
-
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
