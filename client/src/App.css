@@ -43,6 +43,11 @@
 /* Imported styles */
 body{margin-top:20px;}
 
+.col-12.col-lg-5.col-xl-3.border-right {
+  overflow-y: auto;
+  max-height: 950px; /* set a max-height to limit the height of the scrollable section */
+}
+
 .chat-online {
     color: #34ce57
 }
