@@ -2,16 +2,21 @@ import "./App.css";
 import axios from "axios";
 import io from "socket.io-client";
 import Chat from "./components/Chat";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const socket = io.connect("http://localhost:8080");
 
 function App() {
+  const [users, setUsers] = useState([])
+  const [name, setName] = useState("")
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     socket.on('INITIAL_CONNECTION', payload => {
       console.log('Initial Connection');
       console.log(payload);
+      setName(payload.name)
+      setUsers(payload.users)
     });
 
     return () => {
@@ -22,8 +27,10 @@ function App() {
   }, []);
 
   return (
+
+
     <div className="App">
-      <Chat socket={socket} />
+      <Chat socket={socket} setMessage={setMessage} message={message} />
     </div>
   );
 }

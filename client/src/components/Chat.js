@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
+import MessageItem from "./MessageItem";
 
-export default function Chat({ socket }) {
-  const [message, setMessage] = useState("");
+export default function Chat({ socket, name, time, setMessage, message }) {
 
   const sendMessage = () => {
     if (message !== "") {
@@ -229,6 +229,8 @@ export default function Chat({ socket }) {
                   </div>
                 </div>
               </div>
+
+              <MessageItem name={name} message={message} time={time}/>
 
               {/* Send button and message input field */}
               <div className="flex-grow-0 py-3 px-4 border-top">

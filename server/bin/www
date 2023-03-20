@@ -32,10 +32,13 @@ const io = new Server(server, {
   },
 });
 
+const users = [];
+
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
   const name = ikea.getName();
-  socket.emit('INITIAL_CONNECTION', { name });
+  users.push(name)
+  socket.emit('INITIAL_CONNECTION', { name, users });
 
   socket.on("send_message", message => {
     console.log(message);
