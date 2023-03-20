@@ -8,6 +8,7 @@ require("dotenv").config();
 var app = require("../app");
 var debug = require("debug")("server:server");
 var http = require("http");
+const ikea = require('ikea-name-generator');
 
 /**
  * Get port from environment and store in Express.
@@ -33,10 +34,13 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
+  const name = ikea.getName();
+  socket.emit('INITIAL_CONNECTION', { name });
 
   socket.on("send_message", message => {
-    console.log(message)
-  })
+    console.log(message);
+    console.log(name);
+  });
 
   socket.on("disconnect", () => {
     console.log(`User ${socket.id} disconnected`);
