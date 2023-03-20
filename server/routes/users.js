@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const users = require('../db/queries/users');
+const { getUserById } = require('../db/queries/users');
 
 const users = ['Bob', 'Alex', 'Will', 'Tristan'];
 
