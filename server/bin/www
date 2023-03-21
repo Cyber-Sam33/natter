@@ -37,12 +37,14 @@ const users = [];
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
   const name = ikea.getName();
-  users.push(name)
+  users.push(name);
   socket.emit('INITIAL_CONNECTION', { name, users });
 
-  socket.on("send_message", message => {
-    console.log(message);
+  socket.on("send_message", payload => {
+    console.log(payload);
     console.log(name);
+    // socket.broadcast.emit('send_msg', message);
+    io.emit("send_message", payload);
   });
 
   socket.on("disconnect", () => {
