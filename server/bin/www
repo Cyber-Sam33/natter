@@ -33,24 +33,39 @@ const io = new Server(server, {
 });
 
 const users = [];
+let selectGroup = "Main";
+
 
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
   const name = ikea.getName();
   users.push(name);
+  socket.join("Main");
   socket.emit('INITIAL_CONNECTION', { name, users });
 
   // If connection, socket.emit(join specific room)
   socket.on('join', function(group) {
-  socket.join(group)
-  console.log(group)})
-  
+    socket.join(group);
+    selectGroup = group;
+
+    // console.log(group);
+    // socket.group = group;
+    // console.log('socket group', socket.group);
+    // console.log('socketid', socket.id);
+    // console.log(socket);
+
+    ///emit back to the server 
+    io.to(group).emit("initial_group_connect", { name, users });
+    // console.log('name: ', name);
+    // console.log('users', users);
+  });
 
   socket.on("send_message", payload => {
-    console.log(payload);
+    console.log('payload', payload);
     console.log(name);
     // socket.broadcast.emit('send_msg', message);
-    io.emit("send_message", payload);
+    console.log('Select group: ', selectGroup);
+    io.sockets.to(selectGroup).emit("send_message", payload);
   });
 
   socket.on("disconnect", () => {
