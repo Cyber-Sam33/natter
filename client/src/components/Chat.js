@@ -39,7 +39,7 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
 
               {groups.map(group => {
                 return (
-                  <GroupListItem group={group} setGroup={setGroup} />
+                  <GroupListItem group={group} setGroup={setGroup} socket={socket} />
                 )
               })}
 

@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function GroupListItem({ group, setGroup }) {
+export default function GroupListItem({ group, setGroup, socket }) {
+
+  const joinGroup = () => {
+    socket.emit("join", group)
+  }
+
   return (
     <div>
       <a href="#" className="list-group-item list-group-item-action border-0">
@@ -13,8 +18,9 @@ export default function GroupListItem({ group, setGroup }) {
             width="40"
             height="40"
           />
-          <input type="hidden" onClick={(event) => setGroup()} />
-          <button className="btn btn-primary ml-3 btn-block">{group}</button>
+          <button onClick={() => {setGroup(group);
+                                  joinGroup()}} 
+          className="btn btn-primary ml-3 btn-block">{group}</button>
           <div className="flex-grow-1 ml-3">
             <div className="small">
               <span className="fas fa-circle chat-online"></span>

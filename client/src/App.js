@@ -19,9 +19,7 @@ function App() {
       console.log(payload);
       setName(payload.name);
       setUsers(payload.users);
-
-      // Emit room to server side
-      // socket.emit("join", group)
+      
     });
 
 
