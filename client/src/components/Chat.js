@@ -6,7 +6,10 @@ export default function Chat({ socket, name, time, setMessage, message, messages
   const sendMessage = () => {
 
     if (message !== "") {
-      socket.emit("send_message", { name: name, message: message });
+      const date = new Date();
+      const current_time = date.getHours()+":"+date.getMinutes();
+
+      socket.emit("send_message", { name: name, message: message, time: current_time});
       console.log(message);
     }
   };
@@ -233,7 +236,7 @@ export default function Chat({ socket, name, time, setMessage, message, messages
               </div>
 
               {messages.map(message => {
-                return (<MessageItem key={message.name} name={message.name} message={message.message}/>)
+                return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time}/>)
               })}
 
 
