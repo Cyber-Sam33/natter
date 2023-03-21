@@ -24,7 +24,6 @@ function App() {
       // socket.emit("join", group)
     });
 
-    
 
     socket.on("send_message", payload => {
       setMessages(prev => [...prev, payload]);

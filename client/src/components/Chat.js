@@ -1,4 +1,5 @@
 import { React } from "react";
+import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 
 export default function Chat({ socket, name, setMessage, message, messages, setGroup }) {
@@ -13,6 +14,8 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
       console.log(message);
     }
   };
+
+  const groups = ["Main", "Sports", "Music"]
 
   return (
     <main className="content">
@@ -34,7 +37,13 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
                 </div>
               </div>
 
-              <a
+              {groups.map(group => {
+                return (
+                  <GroupListItem group={group} setGroup={setGroup} />
+                )
+              })}
+
+              {/* <a
                 href="#"
                 className="list-group-item list-group-item-action border-0"
               >
@@ -78,7 +87,7 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
                   </div>
                 </div>
               </a>
-              <hr />
+              <hr /> */}
 
               <hr className="d-block d-lg-none mt-1 mb-0" />
             </div>
