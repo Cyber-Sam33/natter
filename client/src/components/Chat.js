@@ -1,12 +1,12 @@
 import { React } from "react";
 import MessageItem from "./MessageItem";
 
-export default function Chat({ socket, name, time, setMessage, message }) {
+export default function Chat({ socket, name, time, setMessage, message, messages }) {
 
   const sendMessage = () => {
 
     if (message !== "") {
-      socket.emit("send_message", { name: name, msg: message });
+      socket.emit("send_message", { name: name, message: message });
       console.log(message);
     }
   };
@@ -232,14 +232,17 @@ export default function Chat({ socket, name, time, setMessage, message }) {
                 </div>
               </div>
 
-              {/* <MessageItem name={name} message={message} time={time}/> */}
+              {messages.map(message => {
+                return (<MessageItem key={message.name} name={message.name} message={message.message}/>)
+              })}
+
 
               {/* Send button and message input field */}
               <div className="flex-grow-0 py-3 px-4 border-top">
                 <div className="input-group">
                   <input
                     type="text"
-                    name="msg"
+                    name="message"
                     className="form-control"
                     placeholder="Type your message"
                     value={message}

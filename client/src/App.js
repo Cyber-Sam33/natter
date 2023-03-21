@@ -40,7 +40,7 @@ function App() {
 
 
     <div className="App">
-      <Chat socket={socket} setMessage={setMessage} message={message} name={name} users={users} />
+      <Chat socket={socket} setMessage={setMessage} message={message} name={name} users={users} messages={messages} />
     </div>
   );
 }
