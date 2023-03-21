@@ -48,7 +48,7 @@ export default function Chat({ socket, name, setMessage, message, messages }) {
                     height="40"
                   />
                   <div className="flex-grow-1 ml-3">
-                    Vanessa Tucker
+                    Main
                     <div className="small">
                       <span className="fas fa-circle chat-online"></span> Online
                     </div>
@@ -71,7 +71,7 @@ export default function Chat({ socket, name, setMessage, message, messages }) {
                     height="40"
                   />
                   <div className="flex-grow-1 ml-3">
-                    William Harris
+                    Sports
                     <div className="small">
                       <span className="fas fa-circle chat-online"></span> Online
                     </div>
