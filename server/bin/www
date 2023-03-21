@@ -40,6 +40,10 @@ io.on("connection", (socket) => {
   users.push(name);
   socket.emit('INITIAL_CONNECTION', { name, users });
 
+  // If connection, socket.emit(join specific room)
+  socket.on('join', function(room) {
+  socket.join(room)})
+
   socket.on("send_message", payload => {
     console.log(payload);
     console.log(name);
