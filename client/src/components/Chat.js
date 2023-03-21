@@ -1,7 +1,7 @@
 import { React } from "react";
 import MessageItem from "./MessageItem";
 
-export default function Chat({ socket, name, time, setMessage, message, messages }) {
+export default function Chat({ socket, name, setMessage, message, messages }) {
 
   const sendMessage = () => {
 
