@@ -1,7 +1,8 @@
 import { React } from "react";
+import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 
-export default function Chat({ socket, name, time, setMessage, message, messages }) {
+export default function Chat({ socket, name, setMessage, message, messages, setGroup }) {
 
   const sendMessage = () => {
 
@@ -13,6 +14,8 @@ export default function Chat({ socket, name, time, setMessage, message, messages
       console.log(message);
     }
   };
+
+  const groups = ["Main", "Sports", "Music"]
 
   return (
     <main className="content">
@@ -34,7 +37,13 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                 </div>
               </div>
 
-              <a
+              {groups.map(group => {
+                return (
+                  <GroupListItem group={group} setGroup={setGroup} socket={socket} />
+                )
+              })}
+
+              {/* <a
                 href="#"
                 className="list-group-item list-group-item-action border-0"
               >
@@ -48,7 +57,7 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                     height="40"
                   />
                   <div className="flex-grow-1 ml-3">
-                    Vanessa Tucker
+                    Main
                     <div className="small">
                       <span className="fas fa-circle chat-online"></span> Online
                     </div>
@@ -71,14 +80,14 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                     height="40"
                   />
                   <div className="flex-grow-1 ml-3">
-                    William Harris
+                    Sports
                     <div className="small">
                       <span className="fas fa-circle chat-online"></span> Online
                     </div>
                   </div>
                 </div>
               </a>
-              <hr />
+              <hr /> */}
 
               <hr className="d-block d-lg-none mt-1 mb-0" />
             </div>
@@ -167,7 +176,7 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                 <div className="chat-messages p-4">
                   {/* Individual chat messages */}
 
-                  <div className="chat-message-left pb-4">
+                  {/* <div className="chat-message-left pb-4">
                     <div>
                       <img
                         src="https://bootdey.com/img/Content/avatar/avatar3.png"
@@ -231,13 +240,14 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                       Sit meis deleniti eu, pri vidit meliore docendi ut, an eum
                       erat animal commodo.
                     </div>
-                  </div>
-                </div>
-              </div>
+                  </div> */}
 
               {messages.map(message => {
                 return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time}/>)
               })}
+                </div>
+              </div>
+
 
 
               {/* Send button and message input field */}
