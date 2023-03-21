@@ -167,7 +167,7 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                 <div className="chat-messages p-4">
                   {/* Individual chat messages */}
 
-                  <div className="chat-message-left pb-4">
+                  {/* <div className="chat-message-left pb-4">
                     <div>
                       <img
                         src="https://bootdey.com/img/Content/avatar/avatar3.png"
@@ -231,13 +231,14 @@ export default function Chat({ socket, name, time, setMessage, message, messages
                       Sit meis deleniti eu, pri vidit meliore docendi ut, an eum
                       erat animal commodo.
                     </div>
-                  </div>
-                </div>
-              </div>
+                  </div> */}
 
               {messages.map(message => {
                 return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time}/>)
               })}
+                </div>
+              </div>
+
 
 
               {/* Send button and message input field */}
