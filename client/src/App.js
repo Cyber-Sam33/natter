@@ -11,7 +11,7 @@ function App() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [group, setGroup] = useState("Main")
+  const [group, setGroup] = useState("Main");
 
   useEffect(() => {
     socket.on('INITIAL_CONNECTION', payload => {
@@ -19,9 +19,7 @@ function App() {
       console.log(payload);
       setName(payload.name);
       setUsers(payload.users);
-      
     });
-
 
     socket.on("send_message", payload => {
       setMessages(prev => [...prev, payload]);
@@ -43,7 +41,7 @@ function App() {
 
 
     <div className="App">
-      <Chat socket={socket} setMessage={setMessage} message={message} name={name} users={users} messages={messages} setGroup={setGroup}/>
+      <Chat socket={socket} setMessage={setMessage} message={message} name={name} users={users} messages={messages} setGroup={setGroup} />
     </div>
   );
 }
