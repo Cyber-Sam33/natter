@@ -48,7 +48,7 @@ function App() {
         users={users}
         messages={messages}
         setGroup={setGroup}
-        selectedGroup={group}
+        group={group}
       />
     </div>
   );
