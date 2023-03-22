@@ -2,7 +2,7 @@ import { React } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 
-export default function Chat({ socket, name, setMessage, message, messages, setGroup, selectedGroup }) {
+export default function Chat({ socket, name, setMessage, setMessages, message, messages, setGroup, selectedGroup }) {
 
   const sendMessage = () => {
 
@@ -10,6 +10,7 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
       const date = new Date();
       const current_time = date.getHours() + ":" + date.getMinutes();
 
+      setMessages((prev) => [...prev, { name: name, message: message, time: current_time, group: selectedGroup }])
       socket.emit("send_message", { name: name, message: message, time: current_time, group: selectedGroup });
       console.log(message);
     }
@@ -37,9 +38,9 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
                 </div>
               </div>
 
-              {groups.map(group => {
+              {groups.map(arrayGroup => {
                 return (
-                  <GroupListItem group={group} setGroup={setGroup} socket={socket} />
+                  <GroupListItem arrayGroup={arrayGroup} setGroup={setGroup} socket={socket} />
                 );
               })}
 
