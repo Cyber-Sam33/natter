@@ -1,10 +1,13 @@
 const router = require('express').Router();
-const { getUserById } = require('../db/queries/users');
-
-const users = ['Bob', 'Alex', 'Will', 'Tristan'];
+const db = require('../configs/db.config');
+// const { getUserById } = require('../db/queries/users');
 
 router.get('/', (req, res) => {
-  res.json(users);
+  db.query(`SELECT * FROM groups`).then((results) => {
+    res.json(results);
+    
+  })
+
 });
 
 module.exports = router;
