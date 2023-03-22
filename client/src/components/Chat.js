@@ -247,7 +247,7 @@ export default function Chat({ socket, name, setMessage, setMessages, message, m
                   </div> */}
 
                   {messages.map(message => {
-                    return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time} group={group} />);
+                    return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time} group={group} groupList={groupList} />);
                   })}
                 </div>
               </div>

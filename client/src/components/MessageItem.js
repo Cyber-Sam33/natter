@@ -1,17 +1,16 @@
 import React from "react";
 
-export default function MessageItem({ name, message, time, group }) {
+export default function MessageItem({ name, message, time, group, groupList }) {
 
-  const main = "https://cdn-icons-png.flaticon.com/512/4043/4043180.png";
-  const sports = "https://cdn-icons-png.flaticon.com/512/857/857418.png";
-  const music = "https://cdn-icons-png.flaticon.com/512/651/651717.png";
-  const logos = { Main: main, Sports: sports, Music: music };
+
+
+  const logoObj = groupList.find((object) => object.name === group)
 
   return (
     <div className="chat-message-left pb-4">
       <div>
         <img
-          src={logos[group]}
+          src={logoObj.logo}
           className="rounded-circle mr-1"
           alt={name} // dynamically add name
           width="40"
