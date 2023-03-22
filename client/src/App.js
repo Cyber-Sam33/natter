@@ -1,5 +1,5 @@
 import "./App.css";
-import axios from "axios";
+import Axios from "axios";
 import io from "socket.io-client";
 import Chat from "./components/Chat";
 import { useEffect, useState } from "react";
@@ -14,6 +14,11 @@ function App() {
   const [group, setGroup] = useState("Main");
 
   useEffect(() => {
+    Axios.get("/groups").then((res) => {
+      console.log(res)
+      // Do stuff with database response
+    })
+
     socket.on("INITIAL_CONNECTION", (payload) => {
       console.log("Initial Connection");
       console.log(payload);

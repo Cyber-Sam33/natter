@@ -9,7 +9,7 @@ const cors = require('cors');
 
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const groupsRouter = require('./routes/groups');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -19,6 +19,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/groups', groupsRouter);
 
 module.exports = app;
