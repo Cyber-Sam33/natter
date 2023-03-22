@@ -21,7 +21,7 @@ function App() {
       setUsers(payload.users);
     });
 
-    socket.on("send_message", payload => {
+    socket.on("receive_message", payload => {
       setMessages(prev => [...prev, payload]);
       // console.log('I am setMessages:', messages);
       console.log('I am payload SetMess:', payload);
@@ -31,6 +31,7 @@ function App() {
       console.log("Unmounting...");
       socket.off('INITIAL_CONNECTION');
       socket.off('send_message');
+      socket.off('receive_message');
 
     };
   }, []);
@@ -41,7 +42,7 @@ function App() {
 
 
     <div className="App">
-      <Chat socket={socket} setMessage={setMessage} message={message} name={name} users={users} messages={messages} setGroup={setGroup} />
+      <Chat socket={socket} setMessage={setMessage} message={message} name={name} users={users} messages={messages} setGroup={setGroup} selectedGroup={group} />
     </div>
   );
 }

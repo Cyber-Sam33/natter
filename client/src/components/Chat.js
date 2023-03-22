@@ -2,20 +2,20 @@ import { React } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 
-export default function Chat({ socket, name, setMessage, message, messages, setGroup }) {
+export default function Chat({ socket, name, setMessage, message, messages, setGroup, selectedGroup }) {
 
   const sendMessage = () => {
 
     if (message !== "") {
       const date = new Date();
-      const current_time = date.getHours()+":"+date.getMinutes();
+      const current_time = date.getHours() + ":" + date.getMinutes();
 
-      socket.emit("send_message", { name: name, message: message, time: current_time});
+      socket.emit("send_message", { name: name, message: message, time: current_time, group: selectedGroup });
       console.log(message);
     }
   };
 
-  const groups = ["Main", "Sports", "Music"]
+  const groups = ["Main", "Sports", "Music"];
 
   return (
     <main className="content">
@@ -40,7 +40,7 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
               {groups.map(group => {
                 return (
                   <GroupListItem group={group} setGroup={setGroup} socket={socket} />
-                )
+                );
               })}
 
               {/* <a
@@ -242,9 +242,9 @@ export default function Chat({ socket, name, setMessage, message, messages, setG
                     </div>
                   </div> */}
 
-              {messages.map(message => {
-                return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time}/>)
-              })}
+                  {messages.map(message => {
+                    return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time} />);
+                  })}
                 </div>
               </div>
 

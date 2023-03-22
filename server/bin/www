@@ -36,14 +36,15 @@ const users = [];
 let selectGroup = "Main";
 
 
-io.on("connection", (socket) => {
+io.sockets.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
   const name = ikea.getName();
   users.push(name);
-  socket.join("Main");
+  // socket.join("Main");
   socket.emit('INITIAL_CONNECTION', { name, users });
 
   // If connection, socket.emit(join specific room)
+  // removed to connect groups properly
   socket.on('join', function(group) {
     socket.join(group);
     selectGroup = group;
@@ -55,7 +56,7 @@ io.on("connection", (socket) => {
     // console.log(socket);
 
     ///emit back to the server 
-    io.to(group).emit("initial_group_connect", { name, users });
+    // io.to(group).emit("initial_group_connect", { name, users });
     // console.log('name: ', name);
     // console.log('users', users);
   });
@@ -65,7 +66,8 @@ io.on("connection", (socket) => {
     console.log(name);
     // socket.broadcast.emit('send_msg', message);
     console.log('Select group: ', selectGroup);
-    io.sockets.to(selectGroup).emit("send_message", payload);
+    socket.join(payload.group);
+    io.sockets.to(payload.group).emit("receive_message", payload);
   });
 
   socket.on("disconnect", () => {
