@@ -27,6 +27,8 @@ VALUES
     'https://cdn-icons-png.flaticon.com/512/651/651717.png'
   );
 
+INSERT INTO
+  groups (id, name, logo)
 VALUES
   (
     4,
@@ -52,6 +54,8 @@ VALUES
     'https://cdn-icons-png.flaticon.com/512/2473/2473191.png'
   );
 
+INSERT INTO
+  groups (id, name, logo)
 VALUES
   (
     7,
