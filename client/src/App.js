@@ -15,9 +15,9 @@ function App() {
 
   useEffect(() => {
     Axios.get("/groups").then((res) => {
-      console.log(res)
+      console.log(res);
       // Do stuff with database response
-    })
+    });
 
     socket.on("INITIAL_CONNECTION", (payload) => {
       console.log("Initial Connection");
