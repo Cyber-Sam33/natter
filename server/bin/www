@@ -8,7 +8,7 @@ require("dotenv").config();
 var app = require("../app");
 var debug = require("debug")("server:server");
 var http = require("http");
-const ikea = require('ikea-name-generator');
+const ikea = require("ikea-name-generator");
 
 /**
  * Get port from environment and store in Express.
@@ -35,39 +35,40 @@ const io = new Server(server, {
 const users = [];
 let selectGroup = "Main";
 
-
 io.sockets.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
   const name = ikea.getName();
   users.push(name);
   // socket.join("Main");
-  socket.emit('INITIAL_CONNECTION', { name, users });
+  socket.emit("INITIAL_CONNECTION", { name, users });
 
   // If connection, socket.emit(join specific room)
   // removed to connect groups properly
-  socket.on('join', function(group) {
+
+  socket.on("join", function (group) {
+    for (const room of socket.rooms) {
+      if (room !== socket.id) {
+        socket.leave(room)
+        
+      }
+    }
+
+    // socket.leave("Sports")
+    // socket.leave("Music")
+
     socket.join(group);
-    selectGroup = group;
+    console.log(socket.rooms);
+    console.log(`User with ${socket.id} joined group `, group);
 
-    // console.log(group);
-    // socket.group = group;
-    // console.log('socket group', socket.group);
-    // console.log('socketid', socket.id);
-    // console.log(socket);
-
-    ///emit back to the server 
-    // io.to(group).emit("initial_group_connect", { name, users });
-    // console.log('name: ', name);
-    // console.log('users', users);
   });
 
-  socket.on("send_message", payload => {
-    console.log('payload', payload);
+  socket.on("send_message", (payload) => {
+    console.log("payload:", payload);
     console.log(name);
     // socket.broadcast.emit('send_msg', message);
-    console.log('Select group: ', selectGroup);
-    socket.join(payload.group);
-    io.sockets.to(payload.group).emit("receive_message", payload);
+    // console.log("Select group: ", selectGroup);
+    // socket.join(payload.group);
+    socket.to(payload.group).emit("receive_message", payload);
   });
 
   socket.on("disconnect", () => {

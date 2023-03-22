@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function GroupListItem({ group, setGroup, socket }) {
+export default function GroupListItem({ arrayGroup, setGroup, socket }) {
 
   const joinGroup = () => {
-    socket.emit("join", group);
+    socket.emit("join", arrayGroup);
   };
 
   return (
@@ -19,10 +19,10 @@ export default function GroupListItem({ group, setGroup, socket }) {
             height="40"
           />
           <button onClick={() => {
-            setGroup(group);
+            setGroup(arrayGroup);
             joinGroup();
           }}
-            className="btn btn-primary ml-3 btn-block">{group}</button>
+            className="btn btn-primary ml-3 btn-block">{arrayGroup}</button>
           <div className="flex-grow-1 ml-3">
             <div className="small">
               <span className="fas fa-circle chat-online"></span>
