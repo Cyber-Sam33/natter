@@ -6,15 +6,20 @@ export default function GroupListItem({ arrayGroup, setGroup, socket }) {
     socket.emit("join", arrayGroup);
   };
 
+  const main = "https://cdn-icons-png.flaticon.com/512/4043/4043180.png";
+  const sports = "https://cdn-icons-png.flaticon.com/512/857/857418.png";
+  const music = "https://cdn-icons-png.flaticon.com/512/651/651717.png";
+  const logos = { Main: main, Sports: sports, Music: music };
+
   return (
     <div>
       <a href="#" className="list-group-item list-group-item-action border-0">
         <div className="badge bg-success float-right"></div>
         <div className="d-flex align-items-start">
           <img
-            src="https://bootdey.com/img/Content/avatar/avatar2.png"
+            src={logos[arrayGroup]}
             className="rounded-circle mr-1"
-            alt="William Harris"
+            alt="No-Logo"
             width="40"
             height="40"
           />
