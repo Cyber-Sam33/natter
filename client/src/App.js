@@ -12,11 +12,17 @@ function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [group, setGroup] = useState("Main");
+  const [groupList, setGroupList] = useState([]);
 
   useEffect(() => {
     Axios.get("/groups").then((res) => {
-      console.log(res);
+      console.log('Axios res: ', res);
       // Do stuff with database response
+      setGroupList(res.data);
+      console.log('GROUP LIST ', groupList);
+
+    }).catch(function(error) {
+      console.log(error.toJSON());
     });
 
     socket.on("INITIAL_CONNECTION", (payload) => {
@@ -54,6 +60,7 @@ function App() {
         messages={messages}
         setGroup={setGroup}
         group={group}
+        groupList={groupList}
       />
     </div>
   );

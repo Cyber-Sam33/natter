@@ -2,7 +2,9 @@ import { React } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 
-export default function Chat({ socket, name, setMessage, setMessages, message, messages, setGroup, group }) {
+export default function Chat({ socket, name, setMessage, setMessages, message, messages, setGroup, group, groupList }) {
+
+  console.log('GrouplIst in Chat', groupList);
 
   const sendMessage = () => {
 
@@ -16,7 +18,8 @@ export default function Chat({ socket, name, setMessage, setMessages, message, m
     }
   };
 
-  const groups = ["Main", "Sports", "Music"];
+  // const data = groupList;
+  // console.log('data ', data);
 
   return (
     <main className="content">
@@ -38,9 +41,9 @@ export default function Chat({ socket, name, setMessage, setMessages, message, m
                 </div>
               </div>
 
-              {groups.map(arrayGroup => {
+              {groupList.map(arrayGroup => {
                 return (
-                  <GroupListItem arrayGroup={arrayGroup} setGroup={setGroup} socket={socket} />
+                  <GroupListItem arrayGroup={arrayGroup} setGroup={setGroup} socket={socket} key={arrayGroup.id} />
                 );
               })}
 
