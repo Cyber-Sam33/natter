@@ -29,7 +29,7 @@ export default function Chat({
         { name: name, message: message, time: current_time, group: group, sender: name },
       ]);
       socket.emit("send_message", {
-        name: name,
+        // name: name,
         message: message,
         time: current_time,
         group: group,
