@@ -1,19 +1,47 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
+import SearchBar from "./SearchBar";
 
-export default function Chat({ socket, name, setMessage, setMessages, message, messages, setGroup, group, groupList }) {
+export default function Chat({
+  socket,
+  name,
+  setMessage,
+  setMessages,
+  message,
+  messages,
+  setGroup,
+  group,
+  groupList,
+}) {
+  const [searchInput, setSearchInput] = useState("");
+  const [searchDisplay, setSearchDisplay] = useState(groupList);
 
-  console.log('GrouplIst in Chat', groupList);
+  useEffect(() => {
+    // if (.length <= 1){
+    setSearchDisplay(groupList)
+    // }else{
+    //   //logic to show all groups
+    // }
+  }, [groupList])
+
+  console.log("Grouplist in Chat", groupList);
 
   const sendMessage = () => {
-
     if (message !== "") {
       const date = new Date();
       const current_time = date.getHours() + ":" + date.getMinutes();
 
-      setMessages((prev) => [...prev, { name: name, message: message, time: current_time, group: group }]);
-      socket.emit("send_message", { name: name, message: message, time: current_time, group: group });
+      setMessages((prev) => [
+        ...prev,
+        { name: name, message: message, time: current_time, group: group },
+      ]);
+      socket.emit("send_message", {
+        name: name,
+        message: message,
+        time: current_time,
+        group: group,
+      });
       console.log(message);
     }
   };
@@ -31,19 +59,32 @@ export default function Chat({ socket, name, setMessage, setMessages, message, m
             <div className="col-12 col-lg-5 col-xl-3 border-right">
               <div className="px-4 d-none d-md-block">
                 <div className="d-flex align-items-center">
-                  <div className="flex-grow-1">
+                  <SearchBar
+                    groupList={groupList}
+                    setSearchDisplay={setSearchDisplay}
+                    searchInput={searchInput}
+                    setSearchInput={setSearchInput}
+                    searchDisplay={searchDisplay}
+                  />
+
+                  {/* <div className="flex-grow-1">
                     <input
                       type="text"
                       className="form-control my-3"
                       placeholder="Search..."
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
-              {groupList.map(arrayGroup => {
+              {searchDisplay.map((arrayGroup) => {
                 return (
-                  <GroupListItem arrayGroup={arrayGroup} setGroup={setGroup} socket={socket} key={arrayGroup.id} />
+                  <GroupListItem
+                    arrayGroup={arrayGroup}
+                    setGroup={setGroup}
+                    socket={socket}
+                    key={arrayGroup.id}
+                  />
                 );
               })}
 
@@ -246,13 +287,20 @@ export default function Chat({ socket, name, setMessage, setMessages, message, m
                     </div>
                   </div> */}
 
-                  {messages.map(message => {
-                    return (<MessageItem key={message.name} name={message.name} message={message.message} time={message.time} group={group} groupList={groupList} />);
+                  {messages.map((message) => {
+                    return (
+                      <MessageItem
+                        key={message.name}
+                        name={message.name}
+                        message={message.message}
+                        time={message.time}
+                        group={group}
+                        groupList={groupList}
+                      />
+                    );
                   })}
                 </div>
               </div>
-
-
 
               {/* Send button and message input field */}
               <div className="flex-grow-0 py-3 px-4 border-top">
