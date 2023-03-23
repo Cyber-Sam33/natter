@@ -15,15 +15,11 @@ export default function Chat({
   groupList,
 }) {
   const [searchInput, setSearchInput] = useState("");
-  const [searchDisplay, setSearchDisplay] = useState(groupList);
+  // const [searchDisplay, setSearchDisplay] = useState(groupList);
 
-  useEffect(() => {
-    // if (.length <= 1){
-    setSearchDisplay(groupList)
-    // }else{
-    //   //logic to show all groups
-    // }
-  }, [groupList])
+  const filteredItem = groupList.filter(groupItem => {
+    return groupItem.name.toLowerCase().includes(searchInput.toLowerCase())
+  })
 
   console.log("Grouplist in Chat", groupList);
 
@@ -46,9 +42,6 @@ export default function Chat({
     }
   };
 
-  // const data = groupList;
-  // console.log('data ', data);
-
   return (
     <main className="content">
       <div className="container p-0">
@@ -59,25 +52,21 @@ export default function Chat({
             <div className="col-12 col-lg-5 col-xl-3 border-right">
               <div className="px-4 d-none d-md-block">
                 <div className="d-flex align-items-center">
-                  <SearchBar
-                    groupList={groupList}
-                    setSearchDisplay={setSearchDisplay}
-                    searchInput={searchInput}
-                    setSearchInput={setSearchInput}
-                    searchDisplay={searchDisplay}
-                  />
 
-                  {/* <div className="flex-grow-1">
+                  <div className="flex-grow-1">
                     <input
                       type="text"
                       className="form-control my-3"
                       placeholder="Search..."
+                      onChange={(event) => setSearchInput(event.target.value)}
+                      value={searchInput}
                     />
-                  </div> */}
+                  </div>
+
                 </div>
               </div>
 
-              {searchDisplay.map((arrayGroup) => {
+              {filteredItem.map((arrayGroup) => {
                 return (
                   <GroupListItem
                     arrayGroup={arrayGroup}

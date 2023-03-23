@@ -7,28 +7,33 @@ export default function SearchBar({
   setSearchInput,
   searchDisplay,
 }) {
-  const handleChange = (event) => {
-    event.preventDefault();
-    setSearchInput(event.target.value);
-    console.log(searchInput);
 
-    let searchResult = [];
+  const filteredItem = groupList.filter(groupItem => {
+    groupItem.name.toLowerCase().includes(searchInput.toLowerCase())
+  })
 
-    if (searchInput.length > 0) {
-      const filterResult = groupList.filter((groupObj) => {
-        // console.log(groupObj.name.match(searchInput))
-        return groupObj.name.match(searchInput);
-      });
-      searchResult = [...filterResult];
-    }
-    console.log(searchResult);
+  // const handleChange = (event) => {
+  //   event.preventDefault();
+  //   setSearchInput(event.target.value);
+  //   console.log(searchInput);
 
-    if (searchInput.length > 1) {
-      setSearchDisplay([...searchResult]);
-    } else {
-      setSearchDisplay(groupList);
-    }
-  };
+  //   let searchResult = [];
+
+  //   if (searchInput.length > 0) {
+  //     const filterResult = groupList.filter((groupObj) => {
+  //       // console.log(groupObj.name.match(searchInput))
+  //       return groupObj.name.match(searchInput);
+  //     });
+  //     searchResult = [...filterResult];
+  //   }
+  //   console.log(searchResult);
+
+  //   if (searchInput.length > 1) {
+  //     setSearchDisplay([...searchResult]);
+  //   } else {
+  //     setSearchDisplay(groupList);
+  //   }
+  // };
 
   // useEffect(() => {
 
@@ -40,15 +45,9 @@ export default function SearchBar({
         type="text"
         className="form-control my-3"
         placeholder="Search..."
-        onChange={handleChange}
+        onChange={event => setSearchInput(event.target.value)}
         value={searchInput}
       />
-
-      {/* {searchDisplay.map((groupObj) => {
-        <div>
-          <p>{groupObj.name}</p>
-        </div>;
-      })} */}
     </div>
   );
 }
