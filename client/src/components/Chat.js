@@ -23,6 +23,7 @@ export default function Chat({
     if (message !== "") {
       const date = new Date();
       const current_time = date.getHours() + ":" + date.getMinutes();
+      console.log('type of TIME', typeof current_time);
 
       setMessages((prev) => [
         ...prev,
