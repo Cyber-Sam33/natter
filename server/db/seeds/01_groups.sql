@@ -231,5 +231,5 @@ VALUES
   (
     26,
     'AI',
-    'https://cdn-icons-png.flaticon.com/512/1693/1693894.png'
+    'https://cdn-icons-png.flaticon.com/512/9626/9626678.png'
   );
