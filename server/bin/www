@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 require("dotenv").config();
 
+//require the database to query
+const db = require("../configs/db.config");
+
 /**
  * Module dependencies.
  */
@@ -55,6 +58,15 @@ io.sockets.on("connection", (socket) => {
   });
 
   socket.on("send_message", (payload) => {
+    db.query(
+      `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4);`,
+      [payload.sender, payload.group_id, payload.time, payload.message]
+    );
+
+    db.query(`SELECT * FROM messages`).then((results) => {
+      console.log("query result: ", results.rows);
+    });
+
     console.log("payload from send_message:", payload);
     socket.to(payload.group).emit("receive_message", payload);
   });

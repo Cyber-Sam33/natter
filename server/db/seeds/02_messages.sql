@@ -1,0 +1,23 @@
+-- -- seeds/02_messages.sql
+-- INSERT INTO
+--   messages (id, sender, group_id, timestamp, message)
+-- VALUES
+--   (1, 'Youseff', 1, '12:37', 'Happy days! ');
+-- INSERT INTO
+--   messages (id, sender, group_id, timestamp, message)
+-- VALUES
+--   (2, 'Jenny', 2, '12:39', 'Yo, yo yo!!');
+-- INSERT INTO
+--   messages (id, sender, group_id, timestamp, message)
+-- VALUES
+--   (3, 'Khalid', 3, '12:38', 'I like big....');
+-- INSERT INTO
+--   messages (id, sender, group_id, timestamp, message)
+-- VALUES
+--   (
+--     4,
+--     'Sam',
+--     4,
+--     '12:39',
+--     '... '
+--   );

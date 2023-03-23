@@ -5,12 +5,13 @@ const db = require('../configs/db.config');
 router.get('/', (req, res) => {
   db.query(`SELECT * FROM groups`).then((results) => {
     res.json(results.rows);
-    
-  })
+  });
 
 });
 
 module.exports = router;
+
+
 
 
 

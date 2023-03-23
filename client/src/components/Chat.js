@@ -29,12 +29,17 @@ export default function Chat({
         ...prev,
         { name: name, message: message, time: current_time, group: group, sender: name },
       ]);
+
+      //gettting group_id from groups - intial axios request
+      const filterId = groupList.filter((groupObj) => groupObj.name === group);
+
       socket.emit("send_message", {
         // name: name,
         message: message,
         time: current_time,
         group: group,
-        sender: name
+        sender: name,
+        group_id: filterId[0].id
       });
       console.log(message);
     }
