@@ -57,8 +57,6 @@ io.sockets.on("connection", (socket) => {
   socket.on("send_message", (payload) => {
     console.log("payload from send_message:", payload);
     console.log(name);
-    payload.receiver = true;
-    console.log("after test", payload);
     socket.to(payload.group).emit("receive_message", payload);
   });
 
