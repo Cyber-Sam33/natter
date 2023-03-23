@@ -26,13 +26,14 @@ export default function Chat({
 
       setMessages((prev) => [
         ...prev,
-        { name: name, message: message, time: current_time, group: group },
+        { name: name, message: message, time: current_time, group: group, sender: name },
       ]);
       socket.emit("send_message", {
         name: name,
         message: message,
         time: current_time,
         group: group,
+        sender: name
       });
       console.log(message);
     }
@@ -171,6 +172,9 @@ export default function Chat({
                         time={message.time}
                         group={group}
                         groupList={groupList}
+                        socketId={socket.id}
+                        sender={message.sender}
+                        receiver={message.reciever}
                       />
                     );
                   })}
