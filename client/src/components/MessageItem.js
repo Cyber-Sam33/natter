@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function MessageItem({ name, message, time, group, groupList, receiver }) {
+export default function MessageItem({ name, message, time, group, groupList, sender }) {
 
   const logoObj = groupList.find((object) => object.name === group);
 
@@ -8,7 +8,7 @@ export default function MessageItem({ name, message, time, group, groupList, rec
   const right = "chat-message-right pb-4";
 
   return (
-    <div className={receiver ? right : left}>
+    <div className={sender === name ? right : left}>
       <div>
         <img
           src={logoObj.logo}
