@@ -172,9 +172,7 @@ export default function Chat({
                         time={message.time}
                         group={group}
                         groupList={groupList}
-                        socketId={socket.id}
                         sender={message.sender}
-                        receiver={message.reciever}
                       />
                     );
                   })}

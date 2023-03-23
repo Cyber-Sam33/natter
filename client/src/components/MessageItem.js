@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function MessageItem({ name, message, time, group, groupList, receiver, sender }) {
+export default function MessageItem({ name, message, time, group, groupList, sender }) {
 
   const logoObj = groupList.find((object) => object.name === group);
 
