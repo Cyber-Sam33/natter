@@ -1,15 +1,11 @@
 import React from "react";
 
-export default function GroupListItem({ arrayGroup, setGroup, socket }) {
+export default function GroupListItem({ arrayGroup, setGroup, socket, setMessages }) {
 
   const joinGroup = () => {
     socket.emit("join", arrayGroup.name);
+    setMessages([])
   };
-
-  // const main = "https://cdn-icons-png.flaticon.com/512/4043/4043180.png";
-  // const sports = "https://cdn-icons-png.flaticon.com/512/857/857418.png";
-  // const music = "https://cdn-icons-png.flaticon.com/512/651/651717.png";
-  // const logos = { Main: main, Sports: sports, Music: music };
 
   return (
     <div>

@@ -18,10 +18,8 @@ export default function MessageItem({ name, message, time, group, groupList }) {
       </div>
       <div className="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
         <div className="font-weight-bold mb-1">
-          {/* dynamicall add name below */}
           {name}
         </div>
-        {/* correct message varibale added below */}
         {message}
       </div>
     </div>

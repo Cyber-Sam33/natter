@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
-import SearchBar from "./SearchBar";
 
 export default function Chat({
   socket,
@@ -15,17 +14,10 @@ export default function Chat({
   groupList,
 }) {
   const [searchInput, setSearchInput] = useState("");
-  const [searchDisplay, setSearchDisplay] = useState(groupList);
 
-  useEffect(() => {
-    // if (.length <= 1){
-    setSearchDisplay(groupList)
-    // }else{
-    //   //logic to show all groups
-    // }
-  }, [groupList])
-
-  console.log("Grouplist in Chat", groupList);
+  const filteredItem = groupList.filter((groupItem) => {
+    return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
+  });
 
   const sendMessage = () => {
     if (message !== "") {
@@ -46,9 +38,6 @@ export default function Chat({
     }
   };
 
-  // const data = groupList;
-  // console.log('data ', data);
-
   return (
     <main className="content">
       <div className="container p-0">
@@ -59,80 +48,31 @@ export default function Chat({
             <div className="col-12 col-lg-5 col-xl-3 border-right">
               <div className="px-4 d-none d-md-block">
                 <div className="d-flex align-items-center">
-                  <SearchBar
-                    groupList={groupList}
-                    setSearchDisplay={setSearchDisplay}
-                    searchInput={searchInput}
-                    setSearchInput={setSearchInput}
-                    searchDisplay={searchDisplay}
-                  />
-
-                  {/* <div className="flex-grow-1">
+                  {/* Search input area */}
+                  <div className="flex-grow-1">
                     <input
                       type="text"
                       className="form-control my-3"
                       placeholder="Search..."
+                      onChange={(event) => setSearchInput(event.target.value)}
+                      value={searchInput}
                     />
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
-              {searchDisplay.map((arrayGroup) => {
+              {/* Group list rendering */}
+              {filteredItem.map((arrayGroup) => {
                 return (
                   <GroupListItem
                     arrayGroup={arrayGroup}
                     setGroup={setGroup}
                     socket={socket}
                     key={arrayGroup.id}
+                    setMessages={setMessages}
                   />
                 );
               })}
-
-              {/* <a
-                href="#"
-                className="list-group-item list-group-item-action border-0"
-              >
-                <div className="badge bg-success float-right">5</div>
-                <div className="d-flex align-items-start">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                    className="rounded-circle mr-1"
-                    alt="Vanessa Tucker"
-                    width="40"
-                    height="40"
-                  />
-                  <div className="flex-grow-1 ml-3">
-                    Main
-                    <div className="small">
-                      <span className="fas fa-circle chat-online"></span> Online
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <hr />
-
-              <a
-                href="#"
-                className="list-group-item list-group-item-action border-0"
-              >
-                <div className="badge bg-success float-right">2</div>
-                <div className="d-flex align-items-start">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                    className="rounded-circle mr-1"
-                    alt="William Harris"
-                    width="40"
-                    height="40"
-                  />
-                  <div className="flex-grow-1 ml-3">
-                    Sports
-                    <div className="small">
-                      <span className="fas fa-circle chat-online"></span> Online
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <hr /> */}
 
               <hr className="d-block d-lg-none mt-1 mb-0" />
             </div>
@@ -221,72 +161,7 @@ export default function Chat({
                 <div className="chat-messages p-4">
                   {/* Individual chat messages */}
 
-                  {/* <div className="chat-message-left pb-4">
-                    <div>
-                      <img
-                        src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                        className="rounded-circle mr-1"
-                        alt="Sharon Lessman"
-                        width="40"
-                        height="40"
-                      />
-                      <div className="text-muted small text-nowrap mt-2">
-                        2:42 am
-                      </div>
-                    </div>
-                    <div className="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-                      <div className="font-weight-bold mb-1">
-                        Sharon Lessman
-                      </div>
-                      Sed pulvinar, massa vitae interdum pulvinar, risus lectus
-                      porttitor magna, vitae commodo lectus mauris et velit.
-                      Proin ultricies placerat imperdiet. Morbi varius quam ac
-                      venenatis tempus.
-                    </div>
-                  </div>
-
-                  <div className="chat-message-right mb-4">
-                    <div>
-                      <img
-                        src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                        className="rounded-circle mr-1"
-                        alt="Chris Wood"
-                        width="40"
-                        height="40"
-                      />
-                      <div className="text-muted small text-nowrap mt-2">
-                        2:43 am
-                      </div>
-                    </div>
-                    <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                      <div className="font-weight-bold mb-1">You</div>
-                      Lorem ipsum dolor sit amet, vis erat denique in, dicunt
-                      prodesset te vix.
-                    </div>
-                  </div>
-
-                  <div className="chat-message-left pb-4">
-                    <div>
-                      <img
-                        src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                        className="rounded-circle mr-1"
-                        alt="Sharon Lessman"
-                        width="40"
-                        height="40"
-                      />
-                      <div className="text-muted small text-nowrap mt-2">
-                        2:44 am
-                      </div>
-                    </div>
-                    <div className="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-                      <div className="font-weight-bold mb-1">
-                        Sharon Lessman
-                      </div>
-                      Sit meis deleniti eu, pri vidit meliore docendi ut, an eum
-                      erat animal commodo.
-                    </div>
-                  </div> */}
-
+                  {/* List of messages which render in chat area */}
                   {messages.map((message) => {
                     return (
                       <MessageItem
