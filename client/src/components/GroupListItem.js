@@ -1,10 +1,17 @@
 import React from "react";
 
-export default function GroupListItem({ arrayGroup, setGroup, socket, setMessages }) {
-
+export default function GroupListItem({ arrayGroup, setGroup, socket, setMessages, messages, groupList }) {
+  // console.log("Messages :", messages)
   const joinGroup = () => {
     socket.emit("join", arrayGroup.name);
-    setMessages([])
+
+    const result = messages.filter((message) => {
+      return message.name === arrayGroup.name
+    })
+    console.log("Let's go", result)
+    setMessages(result)
+    console.log("Please work :", messages)
+
   };
 
   return (

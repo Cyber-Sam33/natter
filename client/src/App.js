@@ -34,8 +34,7 @@ function App() {
 
     socket.on("receive_message", (payload) => {
       setMessages((prev) => [...prev, payload]);
-      // console.log('I am setMessages:', messages);
-      console.log("I am payload SetMess:", payload);
+      console.log("MESSAGES!!!!!: ", messages)
     });
 
     return () => {

@@ -77,6 +77,8 @@ export default function Chat({
                     socket={socket}
                     key={arrayGroup.id}
                     setMessages={setMessages}
+                    messages={messages}
+                    groupList={groupList}
                   />
                 );
               })}
@@ -169,13 +171,15 @@ export default function Chat({
                   {/* Individual chat messages */}
 
                   {/* List of messages which render in chat area */}
+
+            
                   {messages.map((message) => {
                     return (
                       <MessageItem
                         key={message.name}
                         name={message.name}
                         message={message.message}
-                        time={message.time}
+                        time={message.timestamp}
                         group={group}
                         groupList={groupList}
                         sender={message.sender}

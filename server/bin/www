@@ -53,23 +53,23 @@ io.sockets.on("connection", (socket) => {
     }
 
     socket.join(group);
-    console.log(socket.rooms);
     console.log(`User with ${socket.id} joined group `, group);
   });
 
+  let messageData;
   socket.on("send_message", (payload) => {
     db.query(
       `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4);`,
       [payload.sender, payload.group_id, payload.time, payload.message]
     ).then(() => {
-      db.query(`SELECT * FROM messages`).then((results) => {
+      db.query(`SELECT * FROM messages JOIN groups ON group_id = groups.id`).then((results) => {
         console.log("query result: ", results.rows);
-      });
+        messageData = results.rows
+      }).then(() => {
+        socket.to(payload.group).emit("receive_message", messageData);
+        // console.log("This is what we want: ", messageData)
+      })
     })
-
-
-    console.log("payload from send_message:", payload);
-    socket.to(payload.group).emit("receive_message", payload);
   });
 
   socket.on("disconnect", () => {
