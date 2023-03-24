@@ -20,6 +20,8 @@ export default function Chat({
   });
 
   const sendMessage = () => {
+    setMessage('');
+
     if (message !== "") {
       const date = new Date();
       const current_time = date.getHours() + ":" + date.getMinutes();
@@ -172,7 +174,7 @@ export default function Chat({
 
                   {/* List of messages which render in chat area */}
 
-            
+
                   {messages.map((message) => {
                     return (
                       <MessageItem
@@ -212,3 +214,6 @@ export default function Chat({
     </main>
   );
 }
+
+
+<input type="button" value="Clear form"></input>;
