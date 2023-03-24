@@ -5,14 +5,7 @@ export default function GroupListItem({ arrayGroup, setGroup, socket, setMessage
   const joinGroup = () => {
     socket.emit("join", arrayGroup.name);
 
-    // const result = messages.filter((message) => {
-    //   return message.name === arrayGroup.name
-    // })
-
-    console.log("arrayGroup: ", arrayGroup)
-    // console.log("Let's go", result)
     setMessages([])
-    console.log("Please work :", messages)
 
   };
 

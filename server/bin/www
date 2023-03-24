@@ -45,10 +45,16 @@ io.sockets.on("connection", (socket) => {
 
   socket.emit("INITIAL_CONNECTION", { name, users });
 
-  socket.on("join", function(group) {
-    // db query of the last 5 messages from this group
-
-    // setMessages(dbquery)
+  let fiveMessages;
+  socket.on("join", function (group) {
+    db.query(
+      `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 LIMIT 5`,
+      [group]
+    ).then((results) => {
+      fiveMessages = results.rows 
+    }).then(() => {
+      socket.to(group).emit("group_message", fiveMessages);
+    })
 
     for (const room of socket.rooms) {
       if (room !== socket.id) {
@@ -57,7 +63,6 @@ io.sockets.on("connection", (socket) => {
     }
 
     socket.join(group);
-    console.log(`User with ${socket.id} joined group `, group);
   });
 
   let messageData;
@@ -66,14 +71,18 @@ io.sockets.on("connection", (socket) => {
       `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4);`,
       [payload.sender, payload.group_id, payload.time, payload.message]
     ).then(() => {
-      db.query(`SELECT * FROM messages JOIN groups ON group_id = groups.id`).then((results) => {
-        console.log("query result: ", results.rows);
-        messageData = results.rows
-      }).then(() => {
-        socket.to(payload.group).emit("receive_message", messageData);
-        // console.log("This is what we want: ", messageData)
-      })
-    })
+      db.query(
+        `SELECT messages.*, groups.id as group_id, groups.name, groups.logo FROM messages JOIN groups ON messages.group_id = groups.id;`
+      )
+        .then((results) => {
+          console.log("query result: ", results.rows);
+          messageData = results.rows;
+        })
+        .then(() => {
+          socket.to(payload.group).emit("receive_message", messageData);
+          // console.log("This is what we want: ", messageData)
+        });
+    });
   });
 
   socket.on("disconnect", () => {

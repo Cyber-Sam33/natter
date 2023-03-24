@@ -32,6 +32,11 @@ function App() {
       setUsers(payload.users);
     });
 
+    socket.on("group_message", payload => {
+      setMessage([...payload])
+      console.log("5 messages :", payload)
+    })
+
     socket.on("receive_message", (payload) => {
       setMessages((prev) => [...prev, payload]);
       console.log("MESSAGES!!!!!: ", messages)
