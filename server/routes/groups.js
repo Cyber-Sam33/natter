@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.get("/message/:group", (req, res) => {
   const { group } = req.params;
   db.query(
-    `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 LIMIT 5`,
+    `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 ORDER BY messages.id DESC LIMIT 5;`,
     [group]
   ).then((results) => {
     res.json(results.rows);
