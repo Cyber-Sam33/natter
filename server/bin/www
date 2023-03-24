@@ -61,11 +61,12 @@ io.sockets.on("connection", (socket) => {
     db.query(
       `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4);`,
       [payload.sender, payload.group_id, payload.time, payload.message]
-    );
+    ).then(() => {
+      db.query(`SELECT * FROM messages`).then((results) => {
+        console.log("query result: ", results.rows);
+      });
+    })
 
-    db.query(`SELECT * FROM messages`).then((results) => {
-      console.log("query result: ", results.rows);
-    });
 
     console.log("payload from send_message:", payload);
     socket.to(payload.group).emit("receive_message", payload);
