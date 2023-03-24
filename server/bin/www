@@ -46,6 +46,10 @@ io.sockets.on("connection", (socket) => {
   socket.emit("INITIAL_CONNECTION", { name, users });
 
   socket.on("join", function(group) {
+    // db query of the last 5 messages from this group
+
+    // setMessages(dbquery)
+
     for (const room of socket.rooms) {
       if (room !== socket.id) {
         socket.leave(room);
