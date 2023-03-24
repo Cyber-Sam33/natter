@@ -1,10 +1,22 @@
 import React from "react";
+import Axios from "axios";
 
-export default function GroupListItem({ arrayGroup, setGroup, socket, setMessages }) {
-
+export default function GroupListItem({
+  arrayGroup,
+  setGroup,
+  socket,
+  setMessages,
+  messages,
+  groupList,
+}) {
+  // console.log("Messages :", messages)
   const joinGroup = () => {
     socket.emit("join", arrayGroup.name);
-    setMessages([])
+
+    Axios.get(`/groups/message/${arrayGroup.name}`).then((res) => {
+      console.log("Axios Group Add: ", res.data);
+      setMessages([...res.data]);
+    });
   };
 
   return (
@@ -19,11 +31,15 @@ export default function GroupListItem({ arrayGroup, setGroup, socket, setMessage
             width="40"
             height="40"
           />
-          <button onClick={() => {
-            setGroup(arrayGroup.name);
-            joinGroup();
-          }}
-            className="btn btn-primary ml-3 btn-block">{arrayGroup.name}</button>
+          <button
+            onClick={() => {
+              setGroup(arrayGroup.name);
+              joinGroup();
+            }}
+            className="btn btn-primary ml-3 btn-block"
+          >
+            {arrayGroup.name}
+          </button>
           <div className="flex-grow-1 ml-3">
             <div className="small">
               <span className="fas fa-circle chat-online"></span>

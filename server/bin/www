@@ -39,36 +39,52 @@ const users = [];
 
 io.sockets.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
+  // delete socket.id
   const name = ikea.getName();
   users.push(name);
   socket.join("Main");
 
   socket.emit("INITIAL_CONNECTION", { name, users });
 
-  socket.on("join", function(group) {
-    for (const room of socket.rooms) {
-      if (room !== socket.id) {
-        socket.leave(room);
-      }
-    }
-
-    socket.join(group);
-    console.log(socket.rooms);
-    console.log(`User with ${socket.id} joined group `, group);
-  });
-
-  socket.on("send_message", (payload) => {
+  let fiveMessages;
+  socket.on("join", function (group) {
     db.query(
-      `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4);`,
-      [payload.sender, payload.group_id, payload.time, payload.message]
-    );
-
-    db.query(`SELECT * FROM messages`).then((results) => {
-      console.log("query result: ", results.rows);
+      `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 LIMIT 5`,
+      [group]
+    ).then((results) => {
+      fiveMessages = results.rows;
+      console.log("5xxxxxxx: ", fiveMessages);
+      socket.to(group).emit("group_message", fiveMessages);
     });
 
-    console.log("payload from send_message:", payload);
-    socket.to(payload.group).emit("receive_message", payload);
+    // for (const room of socket.rooms) {
+    //   if (room !== socket.id) {
+    //   }
+      // socket.leave(room);
+    // }
+
+    socket.join(group);
+  });
+
+  let messageData;
+  socket.on("send_message", (payload) => {
+    db.query(
+      `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4) RETURNING *;`,
+      [payload.sender, payload.group_id, payload.time, payload.message]
+    ).then((result) => {
+      console.log("results+++++++: ", result.rows);
+      socket.to(payload.group).emit("receive_message", result.rows[0]);
+      // db.query(
+      //   `SELECT messages.*, groups.id as group_id, groups.name, groups.logo FROM messages JOIN groups ON messages.group_id = groups.id;`
+      // )
+      //   .then((results) => {
+      //     console.log("query result: ", results.rows);
+      //     messageData = results.rows;
+      //   })
+      //   .then(() => {
+      //     // console.log("This is what we want: ", messageData)
+      //   });
+    });
   });
 
   socket.on("disconnect", () => {

@@ -15,15 +15,16 @@ function App() {
   const [groupList, setGroupList] = useState([]);
 
   useEffect(() => {
-    Axios.get("/groups").then((res) => {
-      console.log('Axios res: ', res);
-      // Do stuff with database response
-      setGroupList(res.data);
-      console.log('GROUP LIST ', groupList);
-
-    }).catch(function(error) {
-      console.log(error.toJSON());
-    });
+    Axios.get("/groups")
+      .then((res) => {
+        console.log("Axios res: ", res);
+        // Do stuff with database response
+        setGroupList(res.data);
+        console.log("GROUP LIST ", groupList);
+      })
+      .catch(function (error) {
+        console.log(error.toJSON());
+      });
 
     socket.on("INITIAL_CONNECTION", (payload) => {
       console.log("Initial Connection");
@@ -32,10 +33,17 @@ function App() {
       setUsers(payload.users);
     });
 
+    socket.on("group_message", (payload) => {
+      console.log("Payloadd#####", payload)
+      setMessage([...payload]);
+      console.log("5 messages+++++++++++ :", messages);
+    });
+
     socket.on("receive_message", (payload) => {
+      console.log("payload_____: ", payload);
       setMessages((prev) => [...prev, payload]);
-      // console.log('I am setMessages:', messages);
-      console.log("I am payload SetMess:", payload);
+      // setMessages([...messages, payload]);
+      console.log("MESSAGES!!!!!: ", messages);
     });
 
     return () => {
