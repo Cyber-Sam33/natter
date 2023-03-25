@@ -99,10 +99,9 @@ export default function Chat({
                       height="40"
                     />
                   </div>
-                  <div className="flex-grow-1 pl-3">
-                    <strong>{group}</strong>
+                  <div className="flex-grow-1 pl-3 fs-1">
+                    <h3>{group}</h3>
                     <div className="text-muted small">
-                      <em>Typing...</em>
                     </div>
                   </div>
                   <div>
