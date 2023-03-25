@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
+import logo from "../components/natter_logo.png";
 
 export default function Chat({
   socket,
@@ -19,6 +20,12 @@ export default function Chat({
     return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
   });
 
+  const handleKeydown = (event) => {
+    if (event.key == 'Enter') {
+      sendMessage();
+    }
+  };
+
   const sendMessage = () => {
     setMessage("");
 
@@ -28,7 +35,7 @@ export default function Chat({
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
       console.log("Current Time: ", current_time);
-      
+
       const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
 
@@ -44,7 +51,7 @@ export default function Chat({
           group_id: filterId[0].id,
         },
       ]);
-      
+
 
       //gettting group_id from groups - intial axios request
 
@@ -63,8 +70,8 @@ export default function Chat({
   return (
     <main className="content">
       <div className="container p-0">
-        <h1 className="h3 mb-3">Messages</h1>
-
+        {/* <h1 className="h3 mb-3">Messages</h1> */}
+        <img src={logo} class="h3 mb-3" alt="Natter Logo" />
         <div className="card">
           <div className="row g-0">
             <div className="col-12 col-lg-5 col-xl-3 border-right">
@@ -105,9 +112,9 @@ export default function Chat({
                 <div className="d-flex align-items-center py-1">
                   <div className="position-relative">
                     <img
-                      src="https://cdn-icons-png.flaticon.com/128/1041/1041916.png"
+                      src="https://cdn-icons-png.flaticon.com/512/9946/9946992.png"
                       className="mr-1"
-                      alt="Sharon Lessman"
+                      alt="Speech bubbles"
                       width="60"
                       height="60"
                     />
@@ -117,64 +124,15 @@ export default function Chat({
                     <div className="text-muted small"></div>
                   </div>
                   <div>
-                    <button className="btn btn-primary btn-lg mr-1 px-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        className="feather feather-phone feather-lg"
-                      >
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                      </svg>
-                    </button>
-                    <button className="btn btn-info btn-lg mr-1 px-3 d-none d-md-inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        className="feather feather-video feather-lg"
-                      >
-                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                        <rect
-                          x="1"
-                          y="5"
-                          width="15"
-                          height="14"
-                          rx="2"
-                          ry="2"
-                        ></rect>
-                      </svg>
-                    </button>
-                    <button className="btn btn-light border btn-lg px-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        className="feather feather-more-horizontal feather-lg"
-                      >
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
-                      </svg>
-                    </button>
+                    <div className="position-relative">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/9946/9946992.png"
+                        className="mr-1"
+                        alt="Speech bubbles"
+                        width="60"
+                        height="60"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -211,6 +169,7 @@ export default function Chat({
                     placeholder="Type your message"
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
+                    onKeyDown={handleKeydown}
                   />
                   <button onClick={sendMessage} className="btn btn-primary">
                     Send

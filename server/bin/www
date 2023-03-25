@@ -43,32 +43,35 @@ io.sockets.on("connection", (socket) => {
     console.log("Natter name: ", name);
     users.push(name);
     socket.join("Main");
-  });
+    socket.broadcast.emit("NEW_USER_CONNECTED"), { name });
+});
 
-  socket.emit("INITIAL_CONNECTION", { name, users });
+socket.emit("INITIAL_CONNECTION", { name, users });
 
-  socket.on("join", function(group) {
-    for (const room of socket.rooms) {
-      if (room !== socket.id) {
-        socket.leave(room);
-      }
+socket.on("join", function(group) {
+  for (const room of socket.rooms) {
+    if (room !== socket.id) {
+      socket.leave(room);
     }
-    socket.join(group);
-  });
+  }
 
-  socket.on("send_message", (payload) => {
-    db.query(
-      `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4) RETURNING *;`,
-      [payload.sender, payload.group_id, payload.timestamp, payload.message]
-    ).then((result) => {
-      console.log("results+++++++: ", result.rows);
-      socket.to(payload.group).emit("receive_message", result.rows[0]);
-    });
-  });
 
-  socket.on("disconnect", () => {
-    console.log(`User ${socket.id} disconnected`);
+  socket.join(group);
+});
+
+socket.on("send_message", (payload) => {
+  db.query(
+    `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4) RETURNING *;`,
+    [payload.sender, payload.group_id, payload.timestamp, payload.message]
+  ).then((result) => {
+    console.log("results+++++++: ", result.rows);
+    socket.to(payload.group).emit("receive_message", result.rows[0]);
   });
+});
+
+socket.on("disconnect", () => {
+  console.log(`User ${socket.id} disconnected`);
+});
 });
 
 /**
