@@ -20,28 +20,41 @@ export default function Chat({
   });
 
   const sendMessage = () => {
-    setMessage('');
+    setMessage("");
 
     if (message !== "") {
       const date = new Date();
-      const current_time = date.getHours() + ":" + date.getMinutes();
-      console.log('type of TIME', typeof current_time);
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const current_time = `${hours}:${minutes}`;
+      console.log("Current Time: ", current_time);
+      
+      const filterId = groupList.filter((groupObj) => groupObj.name === group);
+
+
 
       setMessages((prev) => [
+        // This prev is the previous 20 messages from the GroupItemList Axios call
         ...prev,
-        { name: name, message: message, time: current_time, group: group, sender: name },
+        {
+          message: message,
+          timestamp: current_time,
+          group: group,
+          sender: name,
+          group_id: filterId[0].id,
+        },
       ]);
+      
 
       //gettting group_id from groups - intial axios request
-      const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
       socket.emit("send_message", {
         // name: name,
         message: message,
-        time: current_time,
+        timestamp: current_time,
         group: group,
         sender: name,
-        group_id: filterId[0].id
+        group_id: filterId[0].id,
       });
       console.log(message);
     }
@@ -92,18 +105,16 @@ export default function Chat({
                 <div className="d-flex align-items-center py-1">
                   <div className="position-relative">
                     <img
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                      className="rounded-circle mr-1"
+                      src="https://cdn-icons-png.flaticon.com/128/1041/1041916.png"
+                      className="mr-1"
                       alt="Sharon Lessman"
-                      width="40"
-                      height="40"
+                      width="60"
+                      height="60"
                     />
                   </div>
-                  <div className="flex-grow-1 pl-3">
-                    <strong>Sharon Lessman</strong>
-                    <div className="text-muted small">
-                      <em>Typing...</em>
-                    </div>
+                  <div className="flex-grow-1 pl-3 fs-1">
+                    <h3>{group}</h3>
+                    <div className="text-muted small"></div>
                   </div>
                   <div>
                     <button className="btn btn-primary btn-lg mr-1 px-3">
@@ -174,12 +185,11 @@ export default function Chat({
 
                   {/* List of messages which render in chat area */}
 
-
                   {messages.map((message) => {
                     return (
                       <MessageItem
                         key={message.name}
-                        name={message.name}
+                        name={name}
                         message={message.message}
                         time={message.timestamp}
                         group={group}
@@ -214,6 +224,5 @@ export default function Chat({
     </main>
   );
 }
-
 
 <input type="button" value="Clear form"></input>;

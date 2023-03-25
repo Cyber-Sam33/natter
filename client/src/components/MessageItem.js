@@ -12,7 +12,7 @@ export default function MessageItem({ name, message, time, group, groupList, sen
       <div>
         <img
           src={logoObj.logo}
-          className="rounded-circle mr-1"
+          className="mr-1"
           alt={name} // dynamically add name
           width="40"
           height="40"
@@ -21,7 +21,7 @@ export default function MessageItem({ name, message, time, group, groupList, sen
       </div>
       <div className="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
         <div className="font-weight-bold mb-1">
-          {name}
+          {sender}
         </div>
         {message}
       </div>
