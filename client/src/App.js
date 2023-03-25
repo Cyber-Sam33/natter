@@ -3,6 +3,7 @@ import Axios from "axios";
 import io from "socket.io-client";
 import Chat from "./components/Chat";
 import { useEffect, useState } from "react";
+import LandingPage from "./components/LandingPage";
 
 const socket = io.connect("http://localhost:8080");
 
@@ -22,7 +23,7 @@ function App() {
         setGroupList(res.data);
         console.log("GROUP LIST ", groupList);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error.toJSON());
       });
 
@@ -34,7 +35,7 @@ function App() {
     });
 
     socket.on("group_message", (payload) => {
-      console.log("Payloadd#####", payload)
+      console.log("Payloadd#####", payload);
       setMessage([...payload]);
       console.log("5 messages+++++++++++ :", messages);
     });
@@ -58,7 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      <Chat
+      {/* <Chat
         socket={socket}
         setMessage={setMessage}
         setMessages={setMessages}
@@ -69,7 +70,9 @@ function App() {
         setGroup={setGroup}
         group={group}
         groupList={groupList}
-      />
+      /> */}
+
+      <LandingPage />
     </div>
   );
 }
