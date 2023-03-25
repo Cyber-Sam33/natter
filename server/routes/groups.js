@@ -17,7 +17,7 @@ router.get("/message/:group", (req, res) => {
       JOIN groups ON group_id = groups.id
       WHERE groups.name = $1
       ORDER BY messages.id DESC
-      LIMIT 5
+      LIMIT 20
     ) subquery
     ORDER BY subquery.id ASC;`,
     [group]

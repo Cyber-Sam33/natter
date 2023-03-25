@@ -19,22 +19,25 @@ export default function Chat({
     return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
   });
 
-  // get image url for showing logo when group changed
-  const image = groupList.find((groupObj) => {
-    return groupObj.name === group
-  }).logo
-
   const sendMessage = () => {
-    setMessage('');
+    setMessage("");
 
     if (message !== "") {
       const date = new Date();
-      const current_time = date.getHours() + ":" + date.getMinutes();
-      console.log('type of TIME', typeof current_time);
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const current_time = `${hours}:${minutes}`;
+      console.log("Current Time: ", current_time);
 
       setMessages((prev) => [
         ...prev,
-        { name: name, message: message, time: current_time, group: group, sender: name },
+        {
+          name: name,
+          message: message,
+          time: current_time,
+          group: group,
+          sender: name,
+        },
       ]);
 
       //gettting group_id from groups - intial axios request
@@ -46,7 +49,7 @@ export default function Chat({
         time: current_time,
         group: group,
         sender: name,
-        group_id: filterId[0].id
+        group_id: filterId[0].id,
       });
       console.log(message);
     }
@@ -96,19 +99,17 @@ export default function Chat({
               <div className="py-2 px-4 border-bottom d-none d-lg-block">
                 <div className="d-flex align-items-center py-1">
                   <div className="position-relative">
-
-                    <img
+                    {/* <img
                       src={image}
                       className="rounded-circle mr-1"
                       alt="Sharon Lessman"
                       width="40"
                       height="40"
-                    />
+                    /> */}
                   </div>
                   <div className="flex-grow-1 pl-3 fs-1">
                     <h3>{group}</h3>
-                    <div className="text-muted small">
-                    </div>
+                    <div className="text-muted small"></div>
                   </div>
                   <div>
                     <button className="btn btn-primary btn-lg mr-1 px-3">
@@ -179,7 +180,6 @@ export default function Chat({
 
                   {/* List of messages which render in chat area */}
 
-
                   {messages.map((message) => {
                     return (
                       <MessageItem
@@ -219,6 +219,5 @@ export default function Chat({
     </main>
   );
 }
-
 
 <input type="button" value="Clear form"></input>;

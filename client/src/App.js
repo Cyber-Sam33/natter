@@ -34,9 +34,9 @@ function App() {
       setUsers(payload.users);
     });
 
-    socket.on("group_message", (payload) => {
-      setMessages([...payload]);
-    });
+    // socket.on("group_message", (payload) => {
+    //   setMessages([...payload]);
+    // });
 
     socket.on("receive_message", (payload) => {
       console.log("payload_____: ", payload);

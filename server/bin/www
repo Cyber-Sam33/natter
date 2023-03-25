@@ -46,7 +46,6 @@ io.sockets.on("connection", (socket) => {
 
   socket.emit("INITIAL_CONNECTION", { name, users });
 
-  // let fiveMessages;
   socket.on("join", function (group) {
     for (const room of socket.rooms) {
       if (room !== socket.id) {
@@ -56,17 +55,8 @@ io.sockets.on("connection", (socket) => {
 
     socket.join(group);
 
-    // db.query(
-    //   `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 ORDER BY id DESC LIMIT 5;`,
-    //   [group]
-    // ).then((results) => {
-    //   fiveMessages = results.rows;
-    //   socket.to(group).emit("group_message", fiveMessages);
-    // });
-
   });
 
-  let messageData;
   socket.on("send_message", (payload) => {
     db.query(
       `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4) RETURNING *;`,
