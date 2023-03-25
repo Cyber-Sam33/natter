@@ -19,6 +19,11 @@ export default function Chat({
     return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
   });
 
+  // get image url for showing logo when group changed
+  const image = groupList.find((groupObj) => {
+    return groupObj.name === group
+  }).logo
+
   const sendMessage = () => {
     setMessage('');
 
@@ -91,8 +96,9 @@ export default function Chat({
               <div className="py-2 px-4 border-bottom d-none d-lg-block">
                 <div className="d-flex align-items-center py-1">
                   <div className="position-relative">
+
                     <img
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      src={image}
                       className="rounded-circle mr-1"
                       alt="Sharon Lessman"
                       width="40"
