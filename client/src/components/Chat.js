@@ -28,25 +28,26 @@ export default function Chat({
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
       console.log("Current Time: ", current_time);
+      
+      const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
       setMessages((prev) => [
         ...prev,
         {
-          name: name,
           message: message,
-          time: current_time,
+          timestamp: current_time,
           group: group,
           sender: name,
+          group_id: filterId[0].id,
         },
       ]);
 
       //gettting group_id from groups - intial axios request
-      const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
       socket.emit("send_message", {
         // name: name,
         message: message,
-        time: current_time,
+        timestamp: current_time,
         group: group,
         sender: name,
         group_id: filterId[0].id,

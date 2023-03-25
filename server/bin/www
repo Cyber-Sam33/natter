@@ -60,7 +60,7 @@ io.sockets.on("connection", (socket) => {
   socket.on("send_message", (payload) => {
     db.query(
       `INSERT INTO messages (sender, group_id, timestamp, message) VALUES ($1, $2, $3, $4) RETURNING *;`,
-      [payload.sender, payload.group_id, payload.time, payload.message]
+      [payload.sender, payload.group_id, payload.timestamp, payload.message]
     ).then((result) => {
       console.log("results+++++++: ", result.rows);
       socket.to(payload.group).emit("receive_message", result.rows[0]);
