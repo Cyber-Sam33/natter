@@ -100,7 +100,7 @@ export default function Chat({
                     />
                   </div>
                   <div className="flex-grow-1 pl-3">
-                    <strong>Sharon Lessman</strong>
+                    <strong>{group}</strong>
                     <div className="text-muted small">
                       <em>Typing...</em>
                     </div>
