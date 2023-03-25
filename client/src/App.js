@@ -63,6 +63,7 @@ function App() {
       /> */}
 
       <LandingPage />
+
     </div>
   );
 }
