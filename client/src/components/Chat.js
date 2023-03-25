@@ -179,7 +179,7 @@ export default function Chat({
                     return (
                       <MessageItem
                         key={message.name}
-                        name={message.name}
+                        name={name}
                         message={message.message}
                         time={message.timestamp}
                         group={group}

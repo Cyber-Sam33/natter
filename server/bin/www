@@ -46,24 +46,24 @@ io.sockets.on("connection", (socket) => {
 
   socket.emit("INITIAL_CONNECTION", { name, users });
 
-  let fiveMessages;
+  // let fiveMessages;
   socket.on("join", function (group) {
-    db.query(
-      `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 LIMIT 5`,
-      [group]
-    ).then((results) => {
-      fiveMessages = results.rows;
-      console.log("5xxxxxxx: ", fiveMessages);
-      socket.to(group).emit("group_message", fiveMessages);
-    });
-
-    // for (const room of socket.rooms) {
-    //   if (room !== socket.id) {
-    //   }
-      // socket.leave(room);
-    // }
+    for (const room of socket.rooms) {
+      if (room !== socket.id) {
+        socket.leave(room);
+      }
+    }
 
     socket.join(group);
+
+    // db.query(
+    //   `SELECT messages.*, groups.name, groups.id as group_id FROM messages JOIN groups ON group_id = groups.id WHERE groups.name = $1 ORDER BY id DESC LIMIT 5;`,
+    //   [group]
+    // ).then((results) => {
+    //   fiveMessages = results.rows;
+    //   socket.to(group).emit("group_message", fiveMessages);
+    // });
+
   });
 
   let messageData;
@@ -74,16 +74,6 @@ io.sockets.on("connection", (socket) => {
     ).then((result) => {
       console.log("results+++++++: ", result.rows);
       socket.to(payload.group).emit("receive_message", result.rows[0]);
-      // db.query(
-      //   `SELECT messages.*, groups.id as group_id, groups.name, groups.logo FROM messages JOIN groups ON messages.group_id = groups.id;`
-      // )
-      //   .then((results) => {
-      //     console.log("query result: ", results.rows);
-      //     messageData = results.rows;
-      //   })
-      //   .then(() => {
-      //     // console.log("This is what we want: ", messageData)
-      //   });
     });
   });
 
