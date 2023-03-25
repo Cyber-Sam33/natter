@@ -31,7 +31,10 @@ export default function Chat({
       
       const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
+
+
       setMessages((prev) => [
+        // This prev is the previous 20 messages from the GroupItemList Axios call
         ...prev,
         {
           message: message,
@@ -41,6 +44,7 @@ export default function Chat({
           group_id: filterId[0].id,
         },
       ]);
+      
 
       //gettting group_id from groups - intial axios request
 

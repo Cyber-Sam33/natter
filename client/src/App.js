@@ -34,10 +34,6 @@ function App() {
       setUsers(payload.users);
     });
 
-    // socket.on("group_message", (payload) => {
-    //   setMessages([...payload]);
-    // });
-
     socket.on("receive_message", (payload) => {
       console.log("payload_____: ", payload);
       setMessages((prev) => [...prev, payload]);
@@ -51,11 +47,9 @@ function App() {
     };
   }, []);
 
-  // console.log('MESSAGES: ', messages);
-
   return (
     <div className="App">
-      <Chat
+      {/* <Chat
         socket={socket}
         setMessage={setMessage}
         setMessages={setMessages}
@@ -66,9 +60,9 @@ function App() {
         setGroup={setGroup}
         group={group}
         groupList={groupList}
-      />
+      /> */}
 
-      {/* <LandingPage /> */}
+      <LandingPage />
     </div>
   );
 }
