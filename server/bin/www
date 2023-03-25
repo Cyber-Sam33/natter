@@ -43,6 +43,7 @@ io.sockets.on("connection", (socket) => {
     console.log("Natter name: ", name);
     users.push(name);
     socket.join("Main");
+    socket.broadcast.emit("NEW_USER_CONNECTED", { name });
   });
 
   socket.emit("INITIAL_CONNECTION", { name, users });
@@ -53,6 +54,7 @@ io.sockets.on("connection", (socket) => {
         socket.leave(room);
       }
     }
+
     socket.join(group);
   });
 
