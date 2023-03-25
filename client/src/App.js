@@ -14,6 +14,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [group, setGroup] = useState("Main");
   const [groupList, setGroupList] = useState([]);
+  const [page, setPage] = useState("LandingPage");
 
   useEffect(() => {
     Axios.get("/groups")
@@ -49,21 +50,20 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Chat
-        socket={socket}
-        setMessage={setMessage}
-        setMessages={setMessages}
-        message={message}
-        name={name}
-        users={users}
-        messages={messages}
-        setGroup={setGroup}
-        group={group}
-        groupList={groupList}
-      /> */}
-
-      <LandingPage setName={setName} name={name} socket={socket} />
-
+      {page === "Chat" && (
+        <Chat
+          socket={socket}
+          setMessage={setMessage}
+          setMessages={setMessages}
+          message={message}
+          name={name}
+          users={users}
+          messages={messages}
+          setGroup={setGroup}
+          group={group}
+          groupList={groupList}
+        />)}
+      {page === "LandingPage" && (<LandingPage setName={setName} name={name} socket={socket} setPage={setPage} />)}
     </div>
   );
 }

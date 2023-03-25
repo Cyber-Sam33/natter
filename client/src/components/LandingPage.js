@@ -4,9 +4,10 @@ import logo from "./natter_logo.png";
 import video from "../video/vid-natter.mp4";
 
 
-export default function LandingPage({ setName, name, socket }) {
+export default function LandingPage({ setName, name, socket, setPage }) {
   function createName() {
     socket.emit("receive_name", name);
+    setPage("Chat");
   }
 
   return (
