@@ -62,7 +62,7 @@ function App() {
         groupList={groupList}
       /> */}
 
-      <LandingPage />
+      <LandingPage setName={setName} name={name} socket={socket} />
 
     </div>
   );
