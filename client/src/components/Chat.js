@@ -170,8 +170,9 @@ export default function Chat({
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
                     onKeyDown={handleKeydown}
+                    maxLength="1000"
                   />
-                  <button onClick={sendMessage} className="btn btn-primary">
+                  <button onClick={sendMessage} className="btn btn-primary rounded-pill ml-3">
                     Send
                   </button>
                 </div>
