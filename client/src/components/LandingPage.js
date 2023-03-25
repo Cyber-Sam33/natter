@@ -3,24 +3,28 @@ import Axios from "axios";
 import logo from "./natter_logo.png";
 import video from "../video/vid-natter.mp4";
 
-export default function LandingPage() {
+
+export default function LandingPage({ setName, name, socket, setPage }) {
+  function createName() {
+    socket.emit("receive_name", name);
+    setPage("Chat");
+  }
+
   return (
     <body id="page-top">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div className="container px-5">
           <a className="navbar-brand fw-bold ml-20" href="#page-top"></a>
           <img src={logo} class="rounded mx-auto d-block" alt="Natter Logo" />
-          <form className="collapse navbar-collapse d-flex text-center">
-            <div className="form-outline form-black text-center col-md-12">
-              <button className="btn-lg btn-primary rounded-pill mr-3 mb-2 ">
-                <span className="d-flex align-items-center">
-                  <i className="bi-chat-text-fill me-2 mr-2"></i>
-                  <span className="big">Click to Natter</span>
-                </span>
-              </button>
-              <input type="text" placeholder="Enter your name..."></input>
-            </div>
-          </form>
+          <div className="div-outline div-black text-center col-md-12 collapse navbar-collapse d-flex text-center">
+            <input type="text" placeholder="Enter your name..." value={name} onChange={(event) => setName(event.target.value)}></input>
+            <button className="btn-lg btn-primary rounded-pill ml-3 mb-2" onClick={createName}>
+              <span className="d-flex align-items-center">
+                <i className="bi-chat-text-fill me-2 mr-2"></i>
+                <span className="big">Click to Natter</span>
+              </span>
+            </button>
+          </div>
         </div>
       </nav>
       <section>
