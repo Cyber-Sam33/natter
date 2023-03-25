@@ -27,7 +27,7 @@ export default function GroupListItem({
         <div className="d-flex align-items-start">
           <img
             src={arrayGroup.logo}
-            className="rounded-circle mr-1"
+            className="mr-1"
             alt="No-Logo"
             width="40"
             height="40"

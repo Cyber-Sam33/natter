@@ -100,13 +100,13 @@ export default function Chat({
               <div className="py-2 px-4 border-bottom d-none d-lg-block">
                 <div className="d-flex align-items-center py-1">
                   <div className="position-relative">
-                    {/* <img
-                      src={image}
-                      className="rounded-circle mr-1"
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/1041/1041916.png"
+                      className="mr-1"
                       alt="Sharon Lessman"
-                      width="40"
-                      height="40"
-                    /> */}
+                      width="60"
+                      height="60"
+                    />
                   </div>
                   <div className="flex-grow-1 pl-3 fs-1">
                     <h3>{group}</h3>

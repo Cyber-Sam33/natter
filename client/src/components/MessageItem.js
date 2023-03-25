@@ -12,7 +12,7 @@ export default function MessageItem({ name, message, time, group, groupList, sen
       <div>
         <img
           src={logoObj.logo}
-          className="rounded-circle mr-1"
+          className="mr-1"
           alt={name} // dynamically add name
           width="40"
           height="40"
