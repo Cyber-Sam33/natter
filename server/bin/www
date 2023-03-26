@@ -62,7 +62,7 @@ io.sockets.on("connection", (socket) => {
         message: result.data.choices[0].message.content,
         timestamp: payload.timestamp,
         group: "AI",
-        sender: "ChatGPT",
+        sender: "AI Assistant",
         group_id: 26
       })
     }).catch((error) => console.log("Error calling OpenAI API:", error))
