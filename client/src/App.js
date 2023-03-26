@@ -66,6 +66,10 @@ function App() {
       socket.off("INITIAL_CONNECTION");
       socket.off("send_message");
       socket.off("receive_message");
+
+
+
+      
       socket.off("receive_chatgpt")
     };
   }, []);
