@@ -44,7 +44,7 @@ export default function Chat({
           group: group,
           sender: name,
           // id of AI group
-          group_id: 26
+          group_id: 1
         },
       ]);
 
@@ -54,7 +54,7 @@ export default function Chat({
         group: group,
         sender: name,
         // id of AI group
-        group_id: 26
+        group_id: 1
       })
     }
 
