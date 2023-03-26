@@ -3,7 +3,7 @@ import Axios from "axios";
 import logo from "./natter_logo.png";
 import video from "../video/vid-natter.mp4";
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export default function LandingPage({ setName, name, socket, setPage }) {
   function createName() {
@@ -34,7 +34,7 @@ export default function LandingPage({ setName, name, socket, setPage }) {
           <a className="navbar-brand fw-bold ml-20" href="#page-top"></a>
           <img src={logo} class="rounded mx-auto d-block mr-0" alt="Natter Logo" />
           <div className="div-outline div-black text-center col-md-12 collapse navbar-collapse d-flex text-center justify-content-center">
-            <input type="text" placeholder="Enter your name..." value={name} onChange={(event) => setName(event.target.value)} onKeyDown={handleKeydown}></input>
+            <input type="text" placeholder="Enter your name..." value={name} onChange={(event) => setName(event.target.value)} onKeyDown={handleKeydown} maxLength="50"></input>
             <button className="btn-lg btn-primary rounded-pill ml-3 mb-2" onClick={createName}>
               <span className="d-flex align-items-center">
                 <i className="bi-chat-text-fill me-2 mr-2"></i>
