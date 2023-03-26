@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 require("dotenv").config();
+const { Configuration, OpenAIApi } = require('openai')
+
+// Set up openai object for access to API
+const openai = new OpenAIApi(new Configuration({
+  apiKey: process.env.OPENAI_KEY
+}))
 
 //require the database to query
 const db = require("../configs/db.config");
@@ -19,7 +25,7 @@ var http = require("http");
 var port = normalizePort(process.env.PORT || "8080");
 app.set("port", port);
 
-/**
+/** 
  * Create HTTP server.
  */
 
@@ -35,10 +41,33 @@ const io = new Server(server, {
 });
 
 const users = [];
-const name = "";
+// const name = "";
 
 io.sockets.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
+
+  // ChatGPT socket connection to receive prompt from user and return ChatGPT response
+  socket.on("send_chatgpt", payload => {
+    // for (const room of socket.rooms) {
+    //   if (room !== socket.id) {
+    //     socket.leave(room);
+    //   }
+    // }
+
+    openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: payload.message}]
+    }).then((result) => {
+      socket.emit("receive_chatgpt", {
+        message: result.data.choices[0].message.content,
+        timestamp: payload.timestamp,
+        group: "AI",
+        sender: "ChatGPT",
+        group_id: 26
+      })
+    }).catch((error) => console.log("Error calling OpenAI API:", error))
+  })
+
   socket.on("receive_name", (name) => {
     console.log("Natter name: ", name);
     users.push(name);
@@ -46,7 +75,7 @@ io.sockets.on("connection", (socket) => {
     socket.broadcast.emit("NEW_USER_CONNECTED", { name });
   });
 
-  socket.emit("INITIAL_CONNECTION", { name, users });
+  // socket.emit("INITIAL_CONNECTION", { name, users });
 
   socket.on("join", function(group) {
     for (const room of socket.rooms) {

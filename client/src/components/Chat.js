@@ -29,12 +29,40 @@ export default function Chat({
   const sendMessage = () => {
     setMessage("");
 
-    if (message !== "") {
+    if (message !== "" && group === "AI") {
       const date = new Date();
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
-      console.log("Current Time: ", current_time);
+
+      setMessages((prev) => [
+        // This prev is the previous 20 messages from the GroupItemList Axios call
+        ...prev,
+        {
+          message: message,
+          timestamp: current_time,
+          group: group,
+          sender: name,
+          // id of AI group
+          group_id: 26
+        },
+      ]);
+
+      socket.emit("send_chatgpt", {
+        message: message,
+        timestamp: current_time,
+        group: group,
+        sender: name,
+        // id of AI group
+        group_id: 26
+      })
+    }
+
+    if (message !== "" && group !== "AI") {
+      const date = new Date();
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const current_time = `${hours}:${minutes}`;
 
       const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
@@ -170,7 +198,7 @@ export default function Chat({
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
                     onKeyDown={handleKeydown}
-                    maxLength="1000"
+                    // maxLength="1000"
                   />
                   <button onClick={sendMessage} className="btn btn-primary rounded-pill ml-3">
                     Send

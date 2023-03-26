@@ -51,6 +51,11 @@ function App() {
       });
     });
 
+    socket.on("receive_chatgpt", payload => {
+      console.log("payload@@@@@", payload)
+      setMessages((prev) => [...prev, payload])
+    })
+
     socket.on("receive_message", (payload) => {
       console.log("payload_____: ", payload);
       setMessages((prev) => [...prev, payload]);
