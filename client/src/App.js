@@ -38,10 +38,10 @@ function App() {
       setUsers(payload.users);
     });
 
-    socket.on("NEW_USER_CONNECT", (payload) => {
-      toast.success(`${payload.name} has joined Natter!`, {
+    socket.on("NEW_USER_CONNECTED", (payload) => {
+      toast.success(`${payload} has joined Natter!`, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -61,6 +61,7 @@ function App() {
       socket.off("INITIAL_CONNECTION");
       socket.off("send_message");
       socket.off("receive_message");
+      socket.off("NEW_USER_CONNECTED");
     };
   }, []);
 

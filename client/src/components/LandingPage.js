@@ -3,7 +3,7 @@ import Axios from "axios";
 import logo from "./natter_logo.png";
 import video from "../video/vid-natter.mp4";
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export default function LandingPage({ setName, name, socket, setPage }) {
   function createName() {
