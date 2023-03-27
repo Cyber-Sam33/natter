@@ -6,11 +6,18 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function LandingPage({ setName, name, socket }) {
 
   const handleKeydown = (event) => {
+    if (name === "") {
+      return alert("Please enter a name.");
+    }
     if (event.key == 'Enter') {
       socket.emit("receive_name", name);
     };
   };
   const handleClick = () => {
+    if (name === "") {
+      return alert("Please enter a name.");
+    }
+
     socket.emit("receive_name", name);
   };
 
