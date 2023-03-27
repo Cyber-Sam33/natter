@@ -7,7 +7,6 @@ import LandingPage from "./components/LandingPage";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
-
 const socket = io.connect("http://localhost:8080");
 
 function App() {
@@ -18,6 +17,21 @@ function App() {
   const [group, setGroup] = useState("Main");
   const [groupList, setGroupList] = useState([]);
   const [page, setPage] = useState("LandingPage");
+
+  function createName(name) {
+    setPage("Chat");
+    toast.success(`Hi ${name}.  Welcome to Natter!`, {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    setName(name);
+  }
 
   useEffect(() => {
     Axios.get("/groups")
@@ -51,14 +65,25 @@ function App() {
       });
     });
 
+    socket.on("set_user_name", payload => {
+      createName(payload);
+    });
+
+    socket.on("enter_unique_name", payload => {
+      alert(payload);
+    });
+
     socket.on("receive_chatgpt", payload => {
-      console.log("payload@@@@@", payload)
-      setMessages((prev) => [...prev, payload])
-    })
+      setMessages((prev) => [...prev, payload]);
+    });
 
     socket.on("receive_message", (payload) => {
-      console.log("payload_____: ", payload);
+
       setMessages((prev) => [...prev, payload]);
+    });
+
+    socket.on("user-disconnected", (payload) => {
+      console.log(`Disconnected ${payload} `);
     });
 
     return () => {
@@ -66,8 +91,10 @@ function App() {
       socket.off("INITIAL_CONNECTION");
       socket.off("send_message");
       socket.off("receive_message");
-      socket.off("receive_chatgpt")
+      socket.off("receive_chatgpt");
       socket.off("NEW_USER_CONNECTED");
+      socket.off("set_user_name");
+      socket.off("enter_unique_name");
     };
   }, []);
 
