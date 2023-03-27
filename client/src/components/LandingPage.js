@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function LandingPage({ setName, name, socket }) {
 
   const handleKeydown = (event) => {
-    if (event.key == 'Enter') {
+    if (event.key === 'Enter') {
       if (name === "") {
         return alert("Please enter a name.");
       }
@@ -25,7 +25,6 @@ export default function LandingPage({ setName, name, socket }) {
     <body id="page-top">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div className="container px-5">
-          <a className="navbar-brand fw-bold ml-20" href="#page-top"></a>
           <img src={logo} class="rounded mx-auto d-block mr-0" alt="Natter Logo" />
           <div className="div-outline div-black text-center col-md-12 collapse navbar-collapse d-flex text-center justify-content-center">
             <input type="text" placeholder="Enter your name..." value={name} onChange={(event) => setName(event.target.value)} onKeyDown={handleKeydown} maxLength="50"></input>
