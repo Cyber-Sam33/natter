@@ -48,11 +48,6 @@ io.sockets.on("connection", (socket) => {
 
   // ChatGPT socket connection to receive prompt from user and return ChatGPT response
   socket.on("send_chatgpt", payload => {
-    // for (const room of socket.rooms) {
-    //   if (room !== socket.id) {
-    //     socket.leave(room);
-    //   }
-    // }
 
     openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -62,7 +57,7 @@ io.sockets.on("connection", (socket) => {
         message: result.data.choices[0].message.content,
         timestamp: payload.timestamp,
         group: "AI",
-        sender: "ChatGPT",
+        sender: "AI Assistant",
         group_id: 26
       })
     }).catch((error) => console.log("Error calling OpenAI API:", error))

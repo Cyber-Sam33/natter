@@ -1,4 +1,4 @@
--- seeds/01_users.sql
+-- seeds/01_groups.sql
 -- users seeds
 INSERT INTO
   groups (name, logo)
@@ -76,7 +76,7 @@ INSERT INTO
   groups (name, logo)
 VALUES
   (
-    'TV/Movies',
+    'Movies',
     'https://cdn-icons-png.flaticon.com/512/5810/5810256.png'
   );
 
