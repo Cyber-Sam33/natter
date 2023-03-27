@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 require("dotenv").config();
-const { Configuration, OpenAIApi } = require('openai')
+const { Configuration, OpenAIApi } = require('openai');
 
 // Set up openai object for access to API
 const openai = new OpenAIApi(new Configuration({
   apiKey: process.env.OPENAI_KEY
-}))
+}));
 
 //require the database to query
 const db = require("../configs/db.config");
@@ -41,7 +41,8 @@ const io = new Server(server, {
 });
 
 const users = [];
-// const name = "";
+let disConName = "";
+const nameTracker = { test: "test" };
 
 io.sockets.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
@@ -51,7 +52,7 @@ io.sockets.on("connection", (socket) => {
 
     openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: payload.message}]
+      messages: [{ role: "user", content: payload.message }]
     }).then((result) => {
       socket.emit("receive_chatgpt", {
         message: result.data.choices[0].message.content,
@@ -59,19 +60,25 @@ io.sockets.on("connection", (socket) => {
         group: "AI",
         sender: "AI Assistant",
         group_id: 26
-      })
-    }).catch((error) => console.log("Error calling OpenAI API:", error))
-  })
+      });
+    }).catch((error) => console.log("Error calling OpenAI API:", error));
+  });
 
   socket.on("receive_name", (name) => {
     console.log("Natter name: ", name);
-    users.push(name);
-    socket.join("Main");
-    // getPayload(name);
-    socket.broadcast.emit("NEW_USER_CONNECTED", name);
-  });
 
-  // socket.emit("INITIAL_CONNECTION", { name, users });
+
+    if (!nameTracker[name]) {
+      nameTracker[name] = name;
+      console.log("NAME TRACKER--------!$^", nameTracker);
+      socket.join("Main");
+      socket.emit("set_user_name", name);
+      socket.broadcast.emit("NEW_USER_CONNECTED", name);
+      disConName = name;
+    } else {
+      socket.emit("enter_unique_name", "Name already in use. Please enter another name.");
+    }
+  });
 
   socket.on("join", function(group) {
     for (const room of socket.rooms) {
@@ -79,7 +86,6 @@ io.sockets.on("connection", (socket) => {
         socket.leave(room);
       }
     }
-
     socket.join(group);
   });
 
@@ -95,6 +101,7 @@ io.sockets.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(`User ${socket.id} disconnected`);
+    delete nameTracker[disConName];
   });
 });
 

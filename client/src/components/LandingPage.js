@@ -1,30 +1,17 @@
 import React from "react";
-import Axios from "axios";
 import logo from "./natter_logo.png";
 import video from "../video/vid-natter.mp4";
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 
-export default function LandingPage({ setName, name, socket, setPage }) {
-  function createName() {
-    socket.emit("receive_name", name);
-    setPage("Chat");
-    toast.success(`Hi ${name}.  Welcome to Natter!`, {
-      position: "top-center",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  }
+export default function LandingPage({ setName, name, socket }) {
 
   const handleKeydown = (event) => {
     if (event.key == 'Enter') {
-      createName();
-    }
+      socket.emit("receive_name", name);
+    };
+  };
+  const handleClick = () => {
+    socket.emit("receive_name", name);
   };
 
   return (
@@ -35,7 +22,7 @@ export default function LandingPage({ setName, name, socket, setPage }) {
           <img src={logo} class="rounded mx-auto d-block mr-0" alt="Natter Logo" />
           <div className="div-outline div-black text-center col-md-12 collapse navbar-collapse d-flex text-center justify-content-center">
             <input type="text" placeholder="Enter your name..." value={name} onChange={(event) => setName(event.target.value)} onKeyDown={handleKeydown} maxLength="50"></input>
-            <button className="btn-lg btn-primary rounded-pill ml-3 mb-2" onClick={createName}>
+            <button className="btn-lg btn-primary rounded-pill ml-3 mb-2" onClick={handleClick}>
               <span className="d-flex align-items-center">
                 <i className="bi-chat-text-fill me-2 mr-2"></i>
                 <span className="big">Click to Natter</span>
@@ -84,9 +71,4 @@ export default function LandingPage({ setName, name, socket, setPage }) {
       </aside>
     </body>
   );
-}
-
-
-
-
-
+};
