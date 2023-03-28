@@ -1,7 +1,8 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 import logo from "../components/natter_logo.png";
+import Filter from 'bad-words'
 
 export default function Chat({
   socket,
@@ -16,6 +17,9 @@ export default function Chat({
 }) {
   const [searchInput, setSearchInput] = useState("");
 
+  const filter = new Filter();
+  filter.addWords("potato")
+
   const filteredItem = groupList.filter((groupItem) => {
     return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
   });
@@ -29,17 +33,20 @@ export default function Chat({
   const sendMessage = () => {
     setMessage("");
 
+    const newMessage = filter.clean(message)
+    
     if (message !== "" && group === "AI") {
       const date = new Date();
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
 
+      
       setMessages((prev) => [
         // This prev is the previous 20 messages from the GroupItemList Axios call
         ...prev,
         {
-          message: message,
+          message: newMessage,
           timestamp: current_time,
           group: group,
           sender: name,
@@ -49,7 +56,7 @@ export default function Chat({
       ]);
 
       socket.emit("send_chatgpt", {
-        message: message,
+        message: newMessage,
         timestamp: current_time,
         group: group,
         sender: name,
@@ -72,7 +79,7 @@ export default function Chat({
         // This prev is the previous 20 messages from the GroupItemList Axios call
         ...prev,
         {
-          message: message,
+          message: newMessage,
           timestamp: current_time,
           group: group,
           sender: name,
@@ -85,7 +92,7 @@ export default function Chat({
 
       socket.emit("send_message", {
         // name: name,
-        message: message,
+        message: newMessage,
         timestamp: current_time,
         group: group,
         sender: name,
