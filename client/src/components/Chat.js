@@ -113,7 +113,7 @@ export default function Chat({
     <main className="content">
       <div className="container p-0">
         {/* <h1 className="h3 mb-3">Messages</h1> */}
-        <img src={logo} class="h3 mb-3" alt="Natter Logo" />
+        <img src={logo} class="h3 mb-3" alt="Natter Logo" height="150" />
         <div className="card">
           <div className="row g-0">
             <div className="col-12 col-lg-5 col-xl-3 border-right">
