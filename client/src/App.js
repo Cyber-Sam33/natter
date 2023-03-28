@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
+const schedule = require('node-schedule');
 const socket = io.connect("http://localhost:8080");
 
 function App() {
@@ -34,6 +35,23 @@ function App() {
   }
 
   useEffect(() => {
+
+    //strict mode off to get single render
+    const rule = new schedule.RecurrenceRule();
+    rule.minute = 11;
+    const job = schedule.scheduleJob(rule, function() {
+      toast.success(`Please take regular mental health breaks away from social media!`, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    });
+
     Axios.get("/groups")
       .then((res) => {
         console.log("Axios res: ", res);
