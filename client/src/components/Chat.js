@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 import logo from "../components/natter_logo.png";
-import Filter from 'bad-words'
+import Filter from 'bad-words';
 
 export default function Chat({
   socket,
@@ -18,7 +18,7 @@ export default function Chat({
   const [searchInput, setSearchInput] = useState("");
 
   const filter = new Filter();
-  filter.addWords("potato")
+  filter.addWords("potato");
 
   const filteredItem = groupList.filter((groupItem) => {
     return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
@@ -33,15 +33,15 @@ export default function Chat({
   const sendMessage = () => {
     setMessage("");
 
-    const newMessage = filter.clean(message)
-    
+    const newMessage = filter.clean(message);
+
     if (message !== "" && group === "AI") {
       const date = new Date();
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
 
-      
+
       setMessages((prev) => [
         // This prev is the previous 20 messages from the GroupItemList Axios call
         ...prev,
@@ -62,7 +62,7 @@ export default function Chat({
         sender: name,
         // id of AI group
         group_id: 1
-      })
+      });
     }
 
     if (message !== "" && group !== "AI") {
@@ -70,7 +70,6 @@ export default function Chat({
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
-
       const filterId = groupList.filter((groupObj) => groupObj.name === group);
 
 
@@ -101,6 +100,14 @@ export default function Chat({
       console.log(message);
     }
   };
+
+  const findGroupLogo = groupList.filter((groupListObj) => {
+    if (groupListObj.name === group) {
+      // console.log("grouplist OBJ ======", groupListObj, typeof groupListObj);
+      return groupListObj.logo;
+    }
+  });
+  console.log("LOGO jh iug iu- -  - ", findGroupLogo);
 
   return (
     <main className="content">
@@ -139,7 +146,6 @@ export default function Chat({
                   />
                 );
               })}
-
               <hr className="d-block d-lg-none mt-1 mb-0" />
             </div>
             <div className="col-12 col-lg-7 col-xl-9">
@@ -156,6 +162,7 @@ export default function Chat({
                   </div>
                   <div className="flex-grow-1 pl-3 fs-1">
                     <h3>{group}</h3>
+                    <img src={findGroupLogo[0].logo} width="60" height="60" alt="amazing group logo" />
                     <div className="text-muted small"></div>
                   </div>
                   <div>
@@ -205,7 +212,7 @@ export default function Chat({
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
                     onKeyDown={handleKeydown}
-                    // maxLength="1000"
+                  // maxLength="1000"
                   />
                   <button onClick={sendMessage} className="btn btn-primary rounded-pill ml-3">
                     Send
