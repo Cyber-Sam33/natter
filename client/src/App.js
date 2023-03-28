@@ -38,7 +38,7 @@ function App() {
 
     //strict mode off to get single render
     const rule = new schedule.RecurrenceRule();
-    rule.minute = 11;
+    rule.minute = 30;
     const job = schedule.scheduleJob(rule, function() {
       toast.success(`Please take regular mental health breaks away from social media!`, {
         position: "bottom-center",
