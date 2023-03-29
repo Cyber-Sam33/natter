@@ -1,8 +1,8 @@
-import { React, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 import logo from "../components/natter_logo.png";
-import Filter from 'bad-words';
+import Filter from "bad-words";
 
 export default function Chat({
   socket,
@@ -16,8 +16,13 @@ export default function Chat({
   groupList,
 }) {
   const [searchInput, setSearchInput] = useState("");
+  const scrollRef = useRef();
 
-  const filter = new Filter();
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  let filter = new Filter();
   filter.addWords("potato");
 
   const filteredItem = groupList.filter((groupItem) => {
@@ -25,7 +30,7 @@ export default function Chat({
   });
 
   const handleKeydown = (event) => {
-    if (event.key == 'Enter') {
+    if (event.key == "Enter") {
       sendMessage();
     }
   };
@@ -33,14 +38,20 @@ export default function Chat({
   const sendMessage = () => {
     setMessage("");
 
-    const newMessage = filter.clean(message);
+    let newMessage;
+
+    try {
+      newMessage = filter.clean(message);
+    } catch (error) {
+      console.error("Error while cleaning the message:", error);
+      return;
+    }
 
     if (message !== "" && group === "AI") {
       const date = new Date();
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
-
 
       setMessages((prev) => [
         // This prev is the previous 20 messages from the GroupItemList Axios call
@@ -51,7 +62,7 @@ export default function Chat({
           group: group,
           sender: name,
           // id of AI group
-          group_id: 1
+          group_id: 1,
         },
       ]);
 
@@ -61,7 +72,7 @@ export default function Chat({
         group: group,
         sender: name,
         // id of AI group
-        group_id: 1
+        group_id: 1,
       });
     }
 
@@ -71,8 +82,6 @@ export default function Chat({
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
       const filterId = groupList.filter((groupObj) => groupObj.name === group);
-
-
 
       setMessages((prev) => [
         // This prev is the previous 20 messages from the GroupItemList Axios call
@@ -85,7 +94,6 @@ export default function Chat({
           group_id: filterId[0].id,
         },
       ]);
-
 
       //gettting group_id from groups - intial axios request
 
@@ -113,7 +121,7 @@ export default function Chat({
     <main className="content">
       <div className="container p-0">
         {/* <h1 className="h3 mb-3">Messages</h1> */}
-        <img src={logo} class="h3 mb-3" alt="Natter Logo" height="150" />
+        <img src={logo} className="h3 mb-3" alt="Natter Logo" height="150" />
         <div className="card">
           <div className="row g-0">
             <div className="col-12 col-lg-5 col-xl-3 border-right">
@@ -162,7 +170,12 @@ export default function Chat({
                   </div>
                   <div className="flex-grow-1 pl-3 fs-1">
                     <h3>{group}</h3>
-                    <img src={findGroupLogo[0].logo} width="60" height="60" alt="amazing group logo" />
+                    <img
+                      src={findGroupLogo[0].logo}
+                      width="60"
+                      height="60"
+                      alt="amazing group logo"
+                    />
                     <div className="text-muted small"></div>
                   </div>
                   <div>
@@ -187,15 +200,17 @@ export default function Chat({
 
                   {messages.map((message) => {
                     return (
-                      <MessageItem
-                        key={message.name}
-                        name={name}
-                        message={message.message}
-                        time={message.timestamp}
-                        group={group}
-                        groupList={groupList}
-                        sender={message.sender}
-                      />
+                      <div ref={scrollRef}>
+                        <MessageItem
+                          key={message.name}
+                          name={name}
+                          message={message.message}
+                          time={message.timestamp}
+                          group={group}
+                          groupList={groupList}
+                          sender={message.sender}
+                        />
+                      </div>
                     );
                   })}
                 </div>
@@ -212,9 +227,12 @@ export default function Chat({
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
                     onKeyDown={handleKeydown}
-                  // maxLength="1000"
+                    // maxLength="1000"
                   />
-                  <button onClick={sendMessage} className="btn btn-primary rounded-pill ml-3">
+                  <button
+                    onClick={sendMessage}
+                    className="btn btn-primary rounded-pill ml-3"
+                  >
                     Send
                   </button>
                 </div>
@@ -227,4 +245,6 @@ export default function Chat({
   );
 }
 
-<input type="button" value="Clear form"></input>;
+{
+  /* <input type="button" value="Clear form"></input>; */
+}
