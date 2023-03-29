@@ -12,33 +12,24 @@ Natter is a chat application that encourages users to make new connections. The 
 - Natter logo and video of people having a good natter with mental health messages
 
 <p align="center">
-  <img src="pic1">
-</p>
-<p align="center">
-  <img src="pic1">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/natter-landing-page.gif">
 </p>
 
 ## Main Chat Page
 
-- Send messages back and forth on split screen in real time using socket.io. The sender shows up on the opposite side.
+- Send messages back and forth on split screen in real time using socket.io. The sender shows up on the opposite side. Groups on the left side of page with scroll bar so users can chat with people with similar interests.
 <p align="center">
-  <img src="pic3">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-left-right-fullscreen.png">
 </p>
 
-- Send messages to our CHAT GPT AI
+- Send messages to our ChatGPT AI Assistant AND our search bar for groups feature
 <p align="center">
-  <img src="pic4">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-chatgpt-searchbar.png">
 </p>
 
-- Toaster alert: emits the first message to the client who’s logged on /broadcasts messages to all users when someone new connects and send Mental Health 'take-breaks' messages to the user.
+- Toaster alert: emits the first message to the client who’s logged on /broadcasts messages to all users when someone new connects to all users. Also, Mental Health 'take-breaks' messages sent regularly to the user.
 <p align="center">
-  <img src="pic5">
-</p>
-
-- Groups on the left side of page with scroll bar. Chat with people with similar interests
-Search bar for groups
-  <p align="center">
-  <img src="pic6">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-user-greeting-and-new-user-brodcast.png">
 </p>
 
 - Last 20 messages stored in Database to make Axios request for the last twenty messages / tracks and updates continuously so always up to date in real-time.
