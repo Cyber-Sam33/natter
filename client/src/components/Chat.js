@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 import logo from "../components/natter_logo.png";
@@ -16,6 +16,11 @@ export default function Chat({
   groupList,
 }) {
   const [searchInput, setSearchInput] = useState("");
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior: "smooth"})
+  }, [messages])
 
   const filter = new Filter();
   filter.addWords("potato");
@@ -187,15 +192,17 @@ export default function Chat({
 
                   {messages.map((message) => {
                     return (
-                      <MessageItem
-                        key={message.name}
-                        name={name}
-                        message={message.message}
-                        time={message.timestamp}
-                        group={group}
-                        groupList={groupList}
-                        sender={message.sender}
-                      />
+                      <div ref={scrollRef}>
+                        <MessageItem
+                          key={message.name}
+                          name={name}
+                          message={message.message}
+                          time={message.timestamp}
+                          group={group}
+                          groupList={groupList}
+                          sender={message.sender}
+                        />
+                      </div>
                     );
                   })}
                 </div>
