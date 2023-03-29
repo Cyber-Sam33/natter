@@ -217,16 +217,16 @@ section {
   z-index: -1;
 }
 
-@media (min-aspect-ratio: 16/9) {
+/* @media (min-aspect-ratio: 16/9) {
   .video {
-    width: auto;
+    width: 100%;
     height: auto;
   }
-}
+} */
 
 @media (max-aspect-ratio: 16/9) {
   .video {
-    width: auto;
+    width: 100%;
     height: auto;
   }
 }
