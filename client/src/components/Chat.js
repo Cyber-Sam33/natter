@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import GroupListItem from "./GroupListItem";
 import MessageItem from "./MessageItem";
 import logo from "../components/natter_logo.png";
-import Filter from 'bad-words';
+import Filter from "bad-words";
 
 export default function Chat({
   socket,
@@ -19,22 +19,18 @@ export default function Chat({
   const scrollRef = useRef();
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({behavior: "smooth"})
-  }, [messages])
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   let filter = new Filter();
-  try {
-    filter.addWords("potato");
-  } catch (error) {
-    console.log("Error while creating filter and adding words:", error)
-  }
+  filter.addWords("potato");
 
   const filteredItem = groupList.filter((groupItem) => {
     return groupItem.name.toLowerCase().includes(searchInput.toLowerCase());
   });
 
   const handleKeydown = (event) => {
-    if (event.key == 'Enter') {
+    if (event.key == "Enter") {
       sendMessage();
     }
   };
@@ -48,7 +44,7 @@ export default function Chat({
       newMessage = filter.clean(message);
     } catch (error) {
       console.error("Error while cleaning the message:", error);
-    return;
+      return;
     }
 
     if (message !== "" && group === "AI") {
@@ -56,7 +52,6 @@ export default function Chat({
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
-
 
       setMessages((prev) => [
         // This prev is the previous 20 messages from the GroupItemList Axios call
@@ -67,7 +62,7 @@ export default function Chat({
           group: group,
           sender: name,
           // id of AI group
-          group_id: 1
+          group_id: 1,
         },
       ]);
 
@@ -77,7 +72,7 @@ export default function Chat({
         group: group,
         sender: name,
         // id of AI group
-        group_id: 1
+        group_id: 1,
       });
     }
 
@@ -87,8 +82,6 @@ export default function Chat({
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const current_time = `${hours}:${minutes}`;
       const filterId = groupList.filter((groupObj) => groupObj.name === group);
-
-
 
       setMessages((prev) => [
         // This prev is the previous 20 messages from the GroupItemList Axios call
@@ -101,7 +94,6 @@ export default function Chat({
           group_id: filterId[0].id,
         },
       ]);
-
 
       //gettting group_id from groups - intial axios request
 
@@ -178,7 +170,12 @@ export default function Chat({
                   </div>
                   <div className="flex-grow-1 pl-3 fs-1">
                     <h3>{group}</h3>
-                    <img src={findGroupLogo[0].logo} width="60" height="60" alt="amazing group logo" />
+                    <img
+                      src={findGroupLogo[0].logo}
+                      width="60"
+                      height="60"
+                      alt="amazing group logo"
+                    />
                     <div className="text-muted small"></div>
                   </div>
                   <div>
@@ -230,9 +227,12 @@ export default function Chat({
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
                     onKeyDown={handleKeydown}
-                  // maxLength="1000"
+                    // maxLength="1000"
                   />
-                  <button onClick={sendMessage} className="btn btn-primary rounded-pill ml-3">
+                  <button
+                    onClick={sendMessage}
+                    className="btn btn-primary rounded-pill ml-3"
+                  >
                     Send
                   </button>
                 </div>
@@ -245,4 +245,6 @@ export default function Chat({
   );
 }
 
-{/* <input type="button" value="Clear form"></input>; */}
+{
+  /* <input type="button" value="Clear form"></input>; */
+}
