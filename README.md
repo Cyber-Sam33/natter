@@ -1,9 +1,18 @@
-## Final Product - Natter
+## Natter
+
+<p align="center">
+  <img src="">
+</p>
 
 ## Project Overview
 
 What is Natter?
-Natter is a chat application that encourages users to make new connections. The word originates from Britain and simply means to chat. Chat about what? Well, anything you like. You’re just having a natter. The features implemented in Natter promote positive mental health and our user-friendly and welcoming concept is particularly aimed at those who may suffer from social anxiety or experince social isolation; we want people to feel safe and comfortable making new connections using Natter which is why we chose to implement these features. As it says on our Landing Page: “Good mental health starts with a good natter!" Simply enter your name, click and you’re ready to natter.
+
+Natter is a chat application that encourages users to make new connections. The word originates from Britain and simply means to chat. Chat about what? Well, anything you like, you’re just having a natter.
+
+The features implemented in Natter promote positive mental health and our user-friendly and welcoming concept is particularly aimed at those who may suffer from social anxiety or experince social isolation; we want people to feel safe and comfortable making new connections using Natter which is why we chose to implement these features.
+
+As it says on our Landing Page: “Good mental health starts with a good natter!" Simply enter your name, click and you’re ready to natter.
 
 ## Landing Page:
 
@@ -32,13 +41,15 @@ Natter is a chat application that encourages users to make new connections. The 
   <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-user-greeting-and-new-user-brodcast.png">
 </p>
 
+## More Features Shown in Gif Below
+
 - Last 20 messages stored in Database to make Axios request for the last twenty messages / tracks and updates continuously so always up to date in real-time.
 
-- Swear word detection blocks profanity with asterixes, creating a safe space for all
+- Swear word detection blocks profanity with asterixes, creating a safe space for all. You can exclude any words you like. In the gif below we've added 'potato' to the list to illustrate further.
 
 - Mental Health Break timer scheduled in real-time using Scheduler - Toaster message every hour
 
-- Scroll bar automatically views the currrent message
+- Scroll bar automatically scrolls to the current message
 
 ## Dependencies
 
@@ -64,28 +75,24 @@ You are going to need to run a client and server simultaneously in your terminal
 **Prerequisites:**
 
 - [Git](https://git-scm.com)
-- [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) 10.x or more
+- [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com))
 - [psql](https://www.postgresql.org/docs/current/app-psql.html)
 
 **Server:**
 
 1. Connect to your postgres server
 
-```sh
-$ psql -U vagrant -d template1
-```
-
-2. Create the necessary objects in the Database
+2. Create the necessary objects in the Database.
 
 ```sh
-$ CREATE ROLE labber WITH LOGIN password 'labber';
-$ CREATE DATABASE midterm OWNER labber;
+$ CREATE ROLE <'role'> WITH LOGIN password <'your-password'>;
+$ CREATE DATABASE <'database-name'> OWNER <'role'>;
 ```
 
 3. Create a folder and clone this repository
 
 ```sh
-$ git clone https://github.com/tienviet10/Food-Pickup.git
+$ git clone https://github.com/Cyber-Sam33/natter
 ```
 
 4. Move to the correct directory
@@ -128,21 +135,14 @@ $ npm run dev
 
 ## Deployment
 
-- Click here to see a woking deployment of our site<a href="https://ornate-scone-630cb8.netlify.app/">Natter</a>
-- Back-end server and PostgresSQL Database hosted by <a href="https://railway.app/">Railway</a>
+- Click here to see a woking deployment of our site<a href="https://ornate-scone-630cb8.netlify.app/"> Natter</a>
+- Back-end server and PostgresSQL Database hosted by <a href="https://railway.app/"> Railway</a>
 - Client side React application hosted by <a href="https://www.netlify.com/">Netlify</a>
 
 ## Authors
 
 - <a href="https://github.com/Cyber-Sam33">Sammi Issa</a>
 - <a href="https://github.com/knoori-code">Khalid Noori</a>
-
-## Acknowledgement
-
-- Home page and restaurant page was created based on a template designed by <a href="https://htmlcodex.com">HTML Codex</a> and distributed by <a href="https://themewagon.com">ThemeWagon</a>.
-- Login page and registration page were created based on a template designed by <a href="https://colorlib.com/wp/template/colorlib-regform-8/">Rok Krivec</a>
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -153,5 +153,9 @@ In the project client directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+In the project server directory, you can start nodemon with run:
+
+### `npm run dev`
+
+The page will reload when you make changes.
+Open [http://localhost:8080](http://localhost:8080) to view it in your browser.
