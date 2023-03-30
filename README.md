@@ -26,6 +26,11 @@ As it says on our Landing Page: “Good mental health starts with a good natter!
 
 ## Main Chat Page
 
+- Last 20 messages pulled from Database and updated in real-time.Scroll bar automatically scrolls to the current message
+<p align="center">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-user-greeting-and-new-user-brodcast.png">
+</p>
+
 - Send messages back and forth on split screen in real time using socket.io. The sender shows up on the opposite side. Groups on the left side of page with scroll bar so users can chat with people with similar interests.
 <p align="center">
   <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-left-right-fullscreen.png">
@@ -41,15 +46,9 @@ As it says on our Landing Page: “Good mental health starts with a good natter!
   <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-user-greeting-and-new-user-brodcast.png">
 </p>
 
-## More Features Shown in Gif Below
+- Swear word detection blocks profanity with asterixes, creating a safe space for all. You can exclude any words you like.
 
-- Last 20 messages stored in Database to make Axios request for the last twenty messages / tracks and updates continuously so always up to date in real-time.
-
-- Swear word detection blocks profanity with asterixes, creating a safe space for all. You can exclude any words you like. In the gif below we've added 'potato' to the list to illustrate further.
-
-- Mental Health Break timer scheduled in real-time using Scheduler - Toaster message every hour
-
-- Scroll bar automatically scrolls to the current message
+- 'Mental Health Break' alert activated in real-time using Node-Schedule.
 
 ## Dependencies
 
