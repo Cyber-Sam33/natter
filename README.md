@@ -1,7 +1,7 @@
 ## Natter
 
 <p align="center">
-  <img src="">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/natter_logo.png">
 </p>
 
 ## Project Overview
@@ -28,7 +28,7 @@ As it says on our Landing Page: “Good mental health starts with a good natter!
 
 - Last 20 messages pulled from Database and updated in real-time.Scroll bar automatically scrolls to the current message
 <p align="center">
-  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-user-greeting-and-new-user-brodcast.png">
+  <img src="https://github.com/Cyber-Sam33/natter/blob/main/docs/chat-page-scroll-search.gif">
 </p>
 
 - Send messages back and forth on split screen in real time using socket.io. The sender shows up on the opposite side. Groups on the left side of page with scroll bar so users can chat with people with similar interests.
