@@ -8,9 +8,9 @@
 
 What is Natter?
 
-Natter is a chat application that encourages users to make new connections. The word originates from Britain and simply means to chat. Chat about what? Well, anything you like, you’re just having a natter.
+Natter is a chat application that encourages users to make new connections. The word originates from the UK and simply means to chat. Chat about what? Well, anything you like, you’re just having a natter.
 
-The features implemented in Natter promote positive mental health and our user-friendly and welcoming concept is particularly aimed at those who may suffer from social anxiety or experince social isolation; we want people to feel safe and comfortable making new connections using Natter which is why we chose to implement these features.
+The features implemented in Natter promote positive mental health and our user-friendly and welcoming concept is particularly aimed at those who may suffer from social anxiety or experience social isolation; we want people to feel safe and comfortable making new connections using Natter which is why we chose to implement these features.
 
 As it says on our Landing Page: “Good mental health starts with a good natter!" Simply enter your name, click and you’re ready to natter.
 
